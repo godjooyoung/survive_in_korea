@@ -15,7 +15,16 @@ let STORY = null;
 // 돔요소
 const imageWrap = document.querySelector('.game_image_wrap');
 const storyWrap = document.querySelector('.game_story_wrap');
+const storyArea = document.querySelector('.story_area');
+const buttonWrap = document.querySelector('.button_wrap');
+
 const startBtn = document.querySelector('#game_start_btn');
+
+
+// 상태바
+const statusBar = document.querySelector('.status_bar');
+
+
 
 // 1. 스토리데이터 불러오는 함수
 async function loadStory() {
@@ -25,9 +34,16 @@ async function loadStory() {
 }
 
 
-// 
 
-function renderChoices(choices) {
+function updateStatusBar() {
+  const percent = (gameState.timeRemaining / gameState.timeLimit) * 100;
+  statusBar.style.width = percent + '%';
+}
+
+
+// 
+// old
+function renderChoices_old(choices) {
   const wrap = document.createElement('div');
   wrap.className = 'choice_wrap';
 
@@ -41,6 +57,37 @@ function renderChoices(choices) {
 
   storyWrap.appendChild(wrap);
 }
+
+function renderChoices_old2(choices) {
+  buttonWrap.innerHTML = '';
+
+  choices.forEach(choice => {
+    const btn = document.createElement('div');
+    btn.className = 'g_button';
+    btn.innerText = choice.text;
+    btn.onclick = () => goToEpisode(choice.next);
+    buttonWrap.appendChild(btn);
+  });
+}
+
+function renderChoices(choices) {
+
+	buttonWrap.innerHTML = '';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'choice_wrap';
+
+  choices.forEach(choice => {
+    const btn = document.createElement('div');
+    btn.className = 'g_button';
+    btn.innerText = choice.text;
+    btn.onclick = () => goToEpisode(choice.next);
+		wrap.appendChild(btn);
+  });
+
+  buttonWrap.appendChild(wrap);
+}
+
 
 
 let bgmPlayer = new Audio();
@@ -86,7 +133,7 @@ function updateSceneImage(imgPath) {
 
 
 // 3. 프롬프트 랜더링 함수
-function renderPrompt(node, index) {
+function renderPrompt_old(node, index) {
   const prompt = node.prompts[index];
   if (!prompt) return;
 
@@ -97,29 +144,117 @@ function renderPrompt(node, index) {
     updateSceneImage();
   }
 
-  // 텍스트 출력
-  storyWrap.innerHTML = `
-    <div class="story_bubble ${prompt.type}">
-      ${prompt.text}
-    </div>
-  `;
+  // 텍스트 출력 버블 생성
+	const bubble = document.createElement('div');
+	bubble.className = `story_bubble ${prompt.type}`;
+	storyWrap.innerHTML = "";
+	storyWrap.appendChild(bubble);
+
+
+	function showNextButton() {
+		const btn = document.createElement('div');
+		btn.className = 'g_button';
+		btn.innerText = '다음';
+		btn.onclick = () => nextLine(node, index);
+		storyWrap.appendChild(btn);
+	}
+
 
   // 효과음 있으면 재생
   if (prompt.sfx) playSFX(prompt.sfx);
 
-  // 다음 버튼 or 선택지
-  if (node.type == 'lines') {
+	// 🔹 텍스트 출력 방식 = 타이핑 으로 글자가 나오냐 그냥 나오냐
+	if (prompt.type == "normal_msg") {
+		// 타이핑 끝난 뒤 버튼 생성
+		typeWriterEffect(bubble, prompt.text, 25, () => {
+			if (node.type == 'lines') showNextButton();
+			if (node.type == 'choice' && index == node.prompts.length - 1) {
+				renderChoices(node.choices);
+			}
+		});
+	} else {
+  	// 즉시 출력
+		bubble.innerHTML = prompt.text;
+
+		if (node.type == 'lines') showNextButton();
+		if (node.type == 'choice' && index == node.prompts.length - 1) {
+			renderChoices(node.choices);
+		}
+	}
+}
+
+function renderPrompt(node, index) {
+  const prompt = node.prompts[index];
+
+	if (!prompt) return;
+
+  // 이미지 처리
+  if (prompt.img) {
+		updateSceneImage(prompt.img);
+  } else {
+    updateSceneImage();
+  }
+
+
+	// 효과음 있으면 재생
+  if (prompt.sfx) playSFX(prompt.sfx);
+	
+	
+  storyArea.innerHTML = '';
+  buttonWrap.innerHTML = ''; // 버튼 영역 항상 초기화
+
+  const bubble = document.createElement('div');
+  bubble.className = `story_bubble ${prompt.type}`;
+  storyArea.appendChild(bubble);
+
+  function showNextButton() {
     const btn = document.createElement('div');
     btn.className = 'g_button';
     btn.innerText = '다음';
     btn.onclick = () => nextLine(node, index);
-    storyWrap.appendChild(btn);
+    buttonWrap.appendChild(btn);
   }
 
-  if (node.type === 'choice' && index === node.prompts.length - 1) {
-    renderChoices(node.choices);
+
+
+	const isLastPrompt = index === node.prompts.length - 1;
+
+	function afterTextRender() {
+    if (node.type == 'lines') {
+      showNextButton();
+    }
+
+    if (node.type == 'choice' && isLastPrompt) {
+      renderChoices(node.choices); // 🔥 선택지만 표시
+    }
   }
+
+
+
+	 // 텍스트 출력
+  if (prompt.type == "normal_msg") {
+    typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
+  } else {
+    bubble.innerHTML = prompt.text;
+    afterTextRender();
+  }
+
+
+	// // 텍스트 출력 방식 = 타이핑 으로 글자가 나오냐 그냥 나오냐
+  // if (prompt.type == "normal_msg") {
+  //   typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
+  // } else {
+  //   bubble.innerHTML = prompt.text;
+  //   showNextButton();
+  // }
+
+  // if (node.type == 'choice' && index == node.prompts.length - 1) {
+  //   renderChoices(node.choices);
+  // }
 }
+
+
+
 
 
 
@@ -129,8 +264,11 @@ function renderEpisode(epId) {
   if (!node) return;
 
   // 화면 초기화
-  imageWrap.innerHTML = '';
-  storyWrap.innerHTML = '';
+  // imageWrap.innerHTML = '';
+  // storyWrap.innerHTML = '';
+
+	storyArea.innerHTML = '';
+  buttonWrap.innerHTML = '';
 
   // 🎵 BGM 변경
   if (node.bgm) {
@@ -149,19 +287,47 @@ function goToEpisode(epId) {
 }
 
 
+
+// 타이핑 함수
+function typeWriterEffect(element, htmlText, speed = 30, callback) {
+  let i = 0;
+  let text = htmlText.replace(/<br\s*\/?>/gi, "\n"); // 줄바꿈 처리
+  element.innerHTML = "";
+
+  function type() {
+    if (i < text.length) {
+      if (text[i] === "\n") {
+      	element.innerHTML += "<br/>";
+      } else {
+        element.innerHTML += text[i];
+      }
+      i++;
+      setTimeout(type, speed);
+    } else if (callback) {
+      callback();
+    }
+  }
+
+  type();
+}
+
+
 function startLifeTimer() {
-  // 3~5분 랜덤 (초 단위)
   const min = 3 * 60;
   const max = 5 * 60;
   gameState.timeLimit = Math.floor(Math.random() * (max - min + 1)) + min;
   gameState.timeRemaining = gameState.timeLimit;
 
+  updateStatusBar(); // 시작 시 100%
+
   gameState.timerInterval = setInterval(() => {
     gameState.timeRemaining--;
 
+    updateStatusBar();
+
     if (gameState.timeRemaining <= 0) {
       clearInterval(gameState.timerInterval);
-      goToEpisode('ep_end'); // 강제 엔딩 이동
+      goToEpisode('ep_end');
     }
   }, 1000);
 }
