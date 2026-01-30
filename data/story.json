@@ -27,15 +27,14 @@
 				{ "type": "독백", "text": "대충 멀쩡해 보였다.", "img": "/assets/images/world_after.webp"},
 				{ "type": "독백", "text": "배고프네..."},
 				{ "type": "독백", "text": "어제 저녁을 건너뛴 게 기억났다.<br/>미친 세상에서도 배는 여전히 제시간에 고프다."},
-				{ "type": "독백", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food.webp"}
+				{ "type": "독백", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp"}
       ],
       "next": "ep3"
     },
-
     "ep3": {
       "type": "choice",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
-      "prompts": [{ "type": "독백", "text": "뭐먹지..?", "img": "/assets/images/food.webp"}],
+      "prompts": [{ "type": "독백", "text": "뭐먹지..?", "img": "/assets/images/food_001.webp"}],
       "choices": [
         { "text": "방사능 떡볶이", "next": "ep3_1" },
         { "text": "해골바가지 팥빙수", "next": "ep3_2" },
