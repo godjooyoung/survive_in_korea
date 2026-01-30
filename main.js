@@ -13,6 +13,7 @@ let gameState = {
 let STORY = null;
 
 // 돔요소
+const gameTitle = document.querySelector('.game_title');
 const imageWrap = document.querySelector('.game_image_wrap');
 const storyWrap = document.querySelector('.game_story_wrap');
 const storyArea = document.querySelector('.story_area');
@@ -40,35 +41,6 @@ function updateStatusBar() {
   statusBar.style.width = percent + '%';
 }
 
-
-// 
-// old
-function renderChoices_old(choices) {
-  const wrap = document.createElement('div');
-  wrap.className = 'choice_wrap';
-
-  choices.forEach(choice => {
-    const btn = document.createElement('div');
-    btn.className = 'g_button';
-    btn.innerText = choice.text;
-    btn.onclick = () => goToEpisode(choice.next);
-    wrap.appendChild(btn);
-  });
-
-  storyWrap.appendChild(wrap);
-}
-
-function renderChoices_old2(choices) {
-  buttonWrap.innerHTML = '';
-
-  choices.forEach(choice => {
-    const btn = document.createElement('div');
-    btn.className = 'g_button';
-    btn.innerText = choice.text;
-    btn.onclick = () => goToEpisode(choice.next);
-    buttonWrap.appendChild(btn);
-  });
-}
 
 function renderChoices(choices) {
 
@@ -239,18 +211,6 @@ function renderPrompt(node, index) {
     afterTextRender();
   }
 
-
-	// // 텍스트 출력 방식 = 타이핑 으로 글자가 나오냐 그냥 나오냐
-  // if (prompt.type == "normal_msg") {
-  //   typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
-  // } else {
-  //   bubble.innerHTML = prompt.text;
-  //   showNextButton();
-  // }
-
-  // if (node.type == 'choice' && index == node.prompts.length - 1) {
-  //   renderChoices(node.choices);
-  // }
 }
 
 
@@ -335,6 +295,9 @@ function startLifeTimer() {
 
 
 startBtn.addEventListener('click', async () => {
+	// 노필터 삭제하기
+	imageWrap.classList.remove('no_filter');
+	gameTitle.style.display = 'none';
   await loadStory();
   startLifeTimer();     // 생존 타이머 시작
   goToEpisode('ep1');   // 무조건 ep1 시작
