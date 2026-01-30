@@ -8,17 +8,18 @@ body {
 	background-color: #394B79;
 }
 
+
 .main_wrap {
+	height: 100vh;
 	display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
+
 .phone_wrap {
-	min-width: 320px;
-  min-height: 560px;
 	border: 1px solid #141926;
 	background-color: #141926;
-	margin-top: 25%;
+	margin: 0 auto;
 	padding: 20px 10px 10px 10px;
 
 	display: flex;
@@ -26,6 +27,17 @@ body {
   gap: 5px;
 
 	position: relative;
+
+	width: 100%;
+	height: 100%;
+
+  min-width: 320px;
+  min-height: 560px;
+
+  max-width: 500px;
+	max-height: 888px;
+
+	/*일정 비율이 넘어가면 태블릿으로 인지하고 phone_wrap을 화면 가운데 두기 위해 마진 탑 지정해줄 예정*/
 }
 
 .status_bar_wrap{
