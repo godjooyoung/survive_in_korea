@@ -12,43 +12,168 @@ let gameState = {
 
 let STORY = null;
 
-// 스토리데이터 불러오는 함수
+// 돔요소
+const imageWrap = document.querySelector('.game_image_wrap');
+const storyWrap = document.querySelector('.game_story_wrap');
+const startBtn = document.querySelector('#game_start_btn');
+
+// 1. 스토리데이터 불러오는 함수
 async function loadStory() {
   const res = await fetch("/data/story.json", { cache: "no-store" });
   if (!res.ok) throw new Error("story.json load failed");
   STORY = await res.json();
 }
 
-// 초기 돔 로드
-async function init() {
+
+// 
+
+function renderChoices(choices) {
+  const wrap = document.createElement('div');
+  wrap.className = 'choice_wrap';
+
+  choices.forEach(choice => {
+    const btn = document.createElement('div');
+    btn.className = 'g_button';
+    btn.innerText = choice.text;
+    btn.onclick = () => goToEpisode(choice.next);
+    wrap.appendChild(btn);
+  });
+
+  storyWrap.appendChild(wrap);
+}
+
+
+let bgmPlayer = new Audio();
+bgmPlayer.loop = true;
+
+function playBGM(src) {
+  if (bgmPlayer.src.includes(src)) return;
+  bgmPlayer.src = src;
+  bgmPlayer.volume = 0.5;
+  bgmPlayer.play().catch(()=>{});
+}
+
+function playSFX(src) {
+  const sfx = new Audio(src);
+  sfx.volume = 0.9;
+  sfx.play().catch(()=>{});
+}
+
+
+
+
+// 2. 다음 라인 진행
+function nextLine(node, index) {
+  const nextIndex = index + 1;
+
+  if (nextIndex < node.prompts.length) {
+    renderPrompt(node, nextIndex);
+  } else {
+    goToEpisode(node.next);
+  }
+}
+
+// 이미지 처리 함수 
+function updateSceneImage(imgPath) {
+  if (imgPath) {
+    imageWrap.style.backgroundImage = `url(${imgPath})`;
+    imageWrap.style.backgroundColor = 'transparent';
+  } else {
+    imageWrap.style.backgroundImage = 'none';
+    imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
+  }
+}
+
+
+// 3. 프롬프트 랜더링 함수
+function renderPrompt(node, index) {
+  const prompt = node.prompts[index];
+  if (!prompt) return;
+
+  // 이미지 처리
+  if (prompt.img) {
+		updateSceneImage(prompt.img);
+  } else {
+    updateSceneImage();
+  }
+
+  // 텍스트 출력
+  storyWrap.innerHTML = `
+    <div class="story_bubble ${prompt.type}">
+      ${prompt.text}
+    </div>
+  `;
+
+  // 효과음 있으면 재생
+  if (prompt.sfx) playSFX(prompt.sfx);
+
+  // 다음 버튼 or 선택지
+  if (node.type == 'lines') {
+    const btn = document.createElement('div');
+    btn.className = 'g_button';
+    btn.innerText = '다음';
+    btn.onclick = () => nextLine(node, index);
+    storyWrap.appendChild(btn);
+  }
+
+  if (node.type === 'choice' && index === node.prompts.length - 1) {
+    renderChoices(node.choices);
+  }
+}
+
+
+
+// 4. 에피소드 랜더링 함수
+function renderEpisode(epId) {
+  const node = STORY.nodes[epId];
+  if (!node) return;
+
+  // 화면 초기화
+  imageWrap.innerHTML = '';
+  storyWrap.innerHTML = '';
+
+  // 🎵 BGM 변경
+  if (node.bgm) {
+    playBGM(node.bgm);
+  }
+
+  // 첫 프롬프트 출력
+  renderPrompt(node, 0);
+}
+
+// 5. 에피소드 이동 함수
+function goToEpisode(epId) {
+  gameState.currentEpisode = epId;
+  gameState.currentPromptIndex = 0;
+  renderEpisode(epId);
+}
+
+
+function startLifeTimer() {
+  // 3~5분 랜덤 (초 단위)
+  const min = 3 * 60;
+  const max = 5 * 60;
+  gameState.timeLimit = Math.floor(Math.random() * (max - min + 1)) + min;
+  gameState.timeRemaining = gameState.timeLimit;
+
+  gameState.timerInterval = setInterval(() => {
+    gameState.timeRemaining--;
+
+    if (gameState.timeRemaining <= 0) {
+      clearInterval(gameState.timerInterval);
+      goToEpisode('ep_end'); // 강제 엔딩 이동
+    }
+  }, 1000);
+}
+
+
+
+startBtn.addEventListener('click', async () => {
   await loadStory();
-  gameState.currentId = STORY.start;
-  renderNode(gameState.currentId);
-}
+  startLifeTimer();     // 생존 타이머 시작
+  goToEpisode('ep1');   // 무조건 ep1 시작
+});
 
-// 게임 시작 버튼 클릭 핸들러
-function startGameClickHandler() {
-	// 3~8분 사이의 랜덤 시간 (초 단위) 세팅
-	gameState.timeLimit = Math.floor(Math.random() * (8 - 3 + 1) + 3) * 60;
-	gameState.timeRemaining = gameState.timeLimit;
-
-	// 화면 전환
-	document.getElementById('title-screen').style.display = 'none';
-	document.getElementById('game-screen').style.display = 'block';
-	document.querySelector('.container').classList.remove('title-active');
-
-	// 타이머 시작
-	startTimer();
-
-	// 첫 스토리 표시
-	showCurrentStory();
-
-	// 스크롤 이벤트 리스너
-	window.addEventListener('scroll', handleScroll);
-
-	// 키보드 이벤트 리스너
-	document.addEventListener('keydown', handleKeyboard);
-}
 
 // 타이머 시작
 function startTimer() {
@@ -68,162 +193,7 @@ function updateTimerDisplay() {
 	document.getElementById('timer-fill').style.width = percentage + '%';
 }
 
-// 현재 스토리 표시
-function showCurrentStory() {
-	const currentStory = storyData[gameState.currentStage];
 
-	if (!currentStory) {
-		endGame('당신은 모든 시련을 극복하고 안전한 곳에 도착했습니다!');
-		return;
-	}
 
-	// 일러스트와 텍스트 업데이트
-	document.getElementById('illustration').textContent = currentStory.illustration;
-	document.getElementById('story-text').textContent = currentStory.text;
 
-	// 선택지가 있는 경우
-	if (currentStory.isChoice) {
-		document.getElementById('scroll-hint').style.display = 'none';
-		showChoices(currentStory.choices);
-	} else {
-		document.getElementById('scroll-hint').style.display = 'block';
-		hideChoices();
-	}
 
-	// 스탯 업데이트
-	updateStats();
-}
-
-// 선택지 표시
-function showChoices(choices) {
-	const container = document.getElementById('choices-container');
-	container.style.display = 'grid';
-
-	const buttons = container.querySelectorAll('.choice-button');
-	buttons.forEach((button, index) => {
-		if (choices[index]) {
-			button.style.display = 'block';
-			button.querySelector('.choice-text').textContent = choices[index].text;
-			button.onclick = () => selectChoice(index);
-		} else {
-			button.style.display = 'none';
-		}
-	});
-
-	// 첫 번째 선택지 선택
-	gameState.selectedChoiceIndex = 0;
-	updateSelectedChoice();
-}
-
-// 선택지 숨기기
-function hideChoices() {
-	document.getElementById('choices-container').style.display = 'none';
-}
-
-// 선택지 선택
-function selectChoice(index) {
-	const currentStory = storyData[gameState.currentStage];
-	const choice = currentStory.choices[index];
-
-	// 효과 적용
-	gameState.survival += choice.effect.survival;
-	gameState.distance += choice.effect.distance;
-	gameState.decisions++;
-
-	// 생존력 체크
-	if (gameState.survival <= 0) {
-		endGame('생존력이 바닥났습니다. 당신은 더 이상 버틸 수 없었습니다.');
-		return;
-	}
-
-	// 다음 스테이지로
-	gameState.currentStage++;
-	showCurrentStory();
-
-	// 맨 위로 스크롤
-	window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// 스크롤 핸들러
-function handleScroll() {
-	const currentStory = storyData[gameState.currentStage];
-
-	// 선택지가 없는 경우에만 스크롤로 진행
-	if (!currentStory.isChoice) {
-		const scrollHeight = document.documentElement.scrollHeight;
-		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-		const clientHeight = document.documentElement.clientHeight;
-
-		// 스크롤이 하단 근처에 도달하면 다음 스테이지
-		if (scrollTop + clientHeight >= scrollHeight - 50) {
-			gameState.currentStage++;
-			showCurrentStory();
-			window.scrollTo({ top: 0, behavior: 'smooth' });
-		}
-	}
-}
-
-// 키보드 핸들러
-function handleKeyboard(e) {
-	const currentStory = storyData[gameState.currentStage];
-
-	if (!currentStory.isChoice) return;
-
-	const choices = currentStory.choices;
-
-	if (e.key === 'ArrowUp') {
-		e.preventDefault();
-		gameState.selectedChoiceIndex = Math.max(0, gameState.selectedChoiceIndex - 1);
-		updateSelectedChoice();
-	} else if (e.key === 'ArrowDown') {
-		e.preventDefault();
-		gameState.selectedChoiceIndex = Math.min(choices.length - 1, gameState.selectedChoiceIndex + 1);
-		updateSelectedChoice();
-	} else if (e.key === 'Enter') {
-		e.preventDefault();
-		selectChoice(gameState.selectedChoiceIndex);
-	}
-}
-
-// 선택된 선택지 업데이트
-function updateSelectedChoice() {
-	const buttons = document.querySelectorAll('.choice-button');
-	buttons.forEach((button, index) => {
-		if (index === gameState.selectedChoiceIndex) {
-			button.classList.add('selected');
-		} else {
-			button.classList.remove('selected');
-		}
-	});
-}
-
-// 스탯 업데이트
-function updateStats() {
-	document.getElementById('survival-stat').textContent = Math.max(0, gameState.survival);
-	document.getElementById('distance-stat').textContent = gameState.distance + 'km';
-	document.getElementById('decision-stat').textContent = gameState.decisions;
-}
-
-// 게임 종료
-function endGame(message) {
-	clearInterval(gameState.timerInterval);
-
-	document.getElementById('game-screen').style.display = 'none';
-	document.getElementById('ending-screen').style.display = 'block';
-
-	// 엔딩 메시지 결정
-	let endingTitle = '게임 오버';
-	let endingMessage = message;
-
-	if (gameState.survival > 0 && gameState.currentStage >= storyData.length - 1) {
-		endingTitle = '생존 성공!';
-		endingMessage = `축하합니다! ${gameState.distance}km를 이동하며 ${gameState.decisions}개의 결정을 내렸습니다. 당신은 한국에서 살아남았습니다.`;
-	}
-
-	document.getElementById('ending-title').textContent = endingTitle;
-	document.getElementById('ending-text').textContent = endingMessage;
-
-	// 이벤트 리스너 제거
-	window.removeEventListener('scroll', handleScroll);
-	document.removeEventListener('keydown', handleKeyboard);
-}

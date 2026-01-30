@@ -1,18 +1,27 @@
 {
   "start": "ep1",
   "nodes": {
+		"ep_end": {
+      "type": "lines",
+			"ep_ko": "죽음",
+      "bgm": "/assets/audio/bgm/theme_008.mp3",
+      "prompts": [
+        { "type": "normal_msg", "text": "당신은 사망했습니다."},
+				{ "type": "normal_msg", "text": "망했다.<br/>아니, 망한 줄 알았다..."}
+      ]
+    },
     "ep1": {
       "type": "lines",
 			"ep_ko": "망한 한국",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
       "prompts": [
-        { "type": "독백", "text": "2026년 한국.", "img": "/assets/images/world_001.webp"},
-				{ "type": "독백", "text": "망했다.<br/>아니, 망한 줄 알았다..."},
-				{ "type": "독백", "text": "말도 안되는 시스템창에,<br/>던전이니..<br/>게이트니..", "img": "/assets/images/world_002.webp"},
-				{ "type": "독백", "text": "어떤 사람은 드디어 자기가 읽던 판타지소설이 현실이 되었다고 하고..<br/>어떤 이는 AI가 세상을 최적화 하는 과정에서 한국만 오류가 났다나..?"},
-        { "type": "독백", "text": "…솔직히 뭐가 맞는지는 아무도 모른다."},
-        { "type": "독백", "text": "그리고 우리는<br/>오래 지나지 않아 이상함에 적응해버렸다.", "img": "/assets/images/world_003.webp"},
-        { "type": "독백", "text": "이 미쳐버린 한국에서 <br/>살아남을 수 있을까?"}
+        { "type": "normal_msg", "text": "2026년 한국.", "img": "/assets/images/world_001.webp"},
+				{ "type": "normal_msg", "text": "망했다.<br/>아니, 망한 줄 알았다..."},
+				{ "type": "normal_msg", "text": "말도 안되는 시스템창에,<br/>던전이니..<br/>게이트니..", "img": "/assets/images/world_002.webp"},
+				{ "type": "normal_msg", "text": "어떤 사람은 드디어 자기가 읽던 판타지소설이 현실이 되었다고 하고..<br/>어떤 이는 AI가 세상을 최적화 하는 과정에서 한국만 오류가 났다나..?"},
+        { "type": "normal_msg", "text": "…솔직히 뭐가 맞는지는 아무도 모른다."},
+        { "type": "normal_msg", "text": "그리고 우리는<br/>오래 지나지 않아 이상함에 적응해버렸다.", "img": "/assets/images/world_003.webp"},
+        { "type": "normal_msg", "text": "이 미쳐버린 한국에서 <br/>살아남을 수 있을까?"}
       ],
       "next": "ep2"
     },
@@ -22,41 +31,41 @@
 			"ep_ko": "배고픈 주인공",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
       "prompts": [
-				{ "type": "독백", "text": "눈을 떴다..."},
-				{ "type": "독백", "text": "천장도 멀쩡하고, 세상도… "},
-				{ "type": "독백", "text": "대충 멀쩡해 보였다.", "img": "/assets/images/world_after.webp"},
-				{ "type": "독백", "text": "배고프네..."},
-				{ "type": "독백", "text": "어제 저녁을 건너뛴 게 기억났다.<br/>미친 세상에서도 배는 여전히 제시간에 고프다."},
-				{ "type": "독백", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp"}
+				{ "type": "normal_msg", "text": "눈을 떴다..."},
+				{ "type": "normal_msg", "text": "천장도 멀쩡하고, 세상도… "},
+				{ "type": "normal_msg", "text": "대충 멀쩡해 보였다.", "img": "/assets/images/world_after.webp"},
+				{ "type": "normal_msg", "text": "배고프네..."},
+				{ "type": "normal_msg", "text": "어제 저녁을 건너뛴 게 기억났다.<br/>미친 세상에서도 배는 여전히 제시간에 고프다."},
+				{ "type": "normal_msg", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp"}
       ],
       "next": "ep3"
     },
     "ep3": {
       "type": "choice",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
-      "prompts": [{ "type": "독백", "text": "뭐먹지..?", "img": "/assets/images/food_001.webp"}],
+      "prompts": [{ "type": "normal_msg", "text": "뭐먹지..?", "img": "/assets/images/food_001.webp"}],
       "choices": [
-        { "text": "방사능 떡볶이", "next": "ep3_1" },
-        { "text": "해골바가지 팥빙수", "next": "ep3_2" },
-        { "text": "깨진유리병 소주", "next": "ep3_3" },
-        { "text": "굶는다.", "next": "ep3_3" }
+        { "c_id":"1", "text": "방사능 떡볶이", "next": "ep3_1" },
+        { "c_id":"2", "text": "해골바가지 팥빙수", "next": "ep3_2" },
+        { "c_id":"3", "text": "깨진유리병 소주", "next": "ep3_3" },
+        { "c_id":"4", "text": "굶는다.", "next": "ep3_3" }
       ]
     },
 		"ep3_1": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
       "prompts": [
-				{ "type": "독백", "text": "하...이거 정말 먹어도 되나?"},
-				{ "type": "효과", "text": "쫀-득!"},
-				{ "type": "효과", "text": "말~랑!"},
-				{ "type": "상태", "text": "[버프: 말랑쫀득 피부]", "sfx":"/assets/audio/sfx/bgm_bell.mp3"},
-				{ "type": "독백", "text": "뭐지..? 생각보다 먹을만한데..?"},
-				{ "type": "효과", "text": "우다탕쾅쾅!!", "img": "/assets/images/stone.webp"},
-				{ "type": "독백", "text": "하..드디어 미친 세상 하직하는구나-"},
-				{ "type": "효과", "text": "디요오오옹", "img": "/assets/images/byebyestone.webp"},
-				{ "type": "상태", "text": "[말랑쫀득 피부]의 효과에 의해 충격 데미지가 사라집니다."},
-				{ "type": "독백", "text": "?!!", "img": "/assets/images/flyhuman.webp"},
-				{ "type": "독백", "text": "그렇게 난 날라온 운석에 맡고 팅겨져 이곳에 도착했다.", "img": "/assets/images/market.webp"}
+				{ "type": "normal_msg", "text": "하...이거 정말 먹어도 되나?"},
+				{ "type": "effect_msg", "text": "쫀-득!"},
+				{ "type": "effect_msg", "text": "말~랑!"},
+				{ "type": "system_msg", "text": "[버프: 말랑쫀득 피부]", "sfx":"/assets/audio/sfx/bgm_bell.mp3"},
+				{ "type": "normal_msg", "text": "뭐지..? 생각보다 먹을만한데..?"},
+				{ "type": "effect_msg", "text": "우다탕쾅쾅!!", "img": "/assets/images/stone.webp"},
+				{ "type": "normal_msg", "text": "하..드디어 미친 세상 하직하는구나-"},
+				{ "type": "effect_msg", "text": "디요오오옹", "img": "/assets/images/byebyestone.webp"},
+				{ "type": "system_msg", "text": "[말랑쫀득 피부]의 효과에 의해 충격 데미지가 사라집니다."},
+				{ "type": "normal_msg", "text": "?!!", "img": "/assets/images/flyhuman.webp"},
+				{ "type": "normal_msg", "text": "그렇게 난 날라온 운석에 맡고 팅겨져 이곳에 도착했다.", "img": "/assets/images/market.webp"}
       ],
       "next": "ep4"
     },
@@ -64,17 +73,17 @@
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
       "prompts": [
-				{ "type": "독백", "text": "이게 제일 이상한거 같기도 하고..먹어볼까"},
-				{ "type": "독백", "text": "음?!"},
-				{ "type": "효과", "text": "평-안"},
-				{ "type": "상태", "text": "[버프: 원효대사의 축복]", "sfx":"/assets/audio/sfx/bgm_bell.mp3"},
-				{ "type": "독백", "text": "뭐지, 이 소리는?", "sfx":"/assets/audio/sfx/bgm_mocktak.mp3"},
-				{ "type": "효과", "text": "구오오오오!!", "img": "/assets/images/monster.webp"},
-				{ "type": "독백", "text": "아, 게이트가 열려서 난리라더니.."},
-				{ "type": "상태", "text": "[원효대사의 축복]으로 몬스터가 당신을 인식하지 못합니다."},
-				{ "type": "독백", "text": "?? 원효대사요..? 이대로 지나친다고?", "img": "/assets/images/bytmonster.webp"},
-				{ "type": "독백", "text": "그렇게 난 황당하게 몬스터가 있었던 자리를 쳐다봤다."},
-				{ "type": "독백", "text": "아.. 저기 시장이 있었지.. 시장이 아직 하나..?", "img": "/assets/images/market.webp"}
+				{ "type": "normal_msg", "text": "이게 제일 이상한거 같기도 하고..먹어볼까"},
+				{ "type": "normal_msg", "text": "음?!"},
+				{ "type": "effect_msg", "text": "평-안"},
+				{ "type": "system_msg", "text": "[버프: 원효대사의 축복]", "sfx":"/assets/audio/sfx/bgm_bell.mp3"},
+				{ "type": "normal_msg", "text": "뭐지, 이 소리는?", "sfx":"/assets/audio/sfx/bgm_mocktak.mp3"},
+				{ "type": "effect_msg", "text": "구오오오오!!", "img": "/assets/images/monster.webp"},
+				{ "type": "normal_msg", "text": "아, 게이트가 열려서 난리라더니.."},
+				{ "type": "system_msg", "text": "[원효대사의 축복]으로 몬스터가 당신을 인식하지 못합니다."},
+				{ "type": "normal_msg", "text": "?? 원효대사요..? 이대로 지나친다고?", "img": "/assets/images/bytmonster.webp"},
+				{ "type": "normal_msg", "text": "그렇게 난 황당하게 몬스터가 있었던 자리를 쳐다봤다."},
+				{ "type": "normal_msg", "text": "아.. 저기 시장이 있었지.. 시장이 아직 하나..?", "img": "/assets/images/market.webp"}
       ],
       "next": "ep4"
     }
