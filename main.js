@@ -26,6 +26,9 @@ const startBtn = document.querySelector('#game_start_btn');
 const statusBar = document.querySelector('.status_bar');
 
 
+let sfxPlayer = new Audio();
+sfxPlayer.loop = false;
+
 
 // 1. 스토리데이터 불러오는 함수
 async function loadStory() {
@@ -72,12 +75,26 @@ function playBGM(src) {
   bgmPlayer.play().catch(()=>{});
 }
 
-function playSFX(src) {
-  const sfx = new Audio(src);
-  sfx.volume = 0.9;
-  sfx.play().catch(()=>{});
-}
+// function playSFX(src) {
+//   const sfx = new Audio(src);
+//   sfx.volume = 0.9;
+//   sfx.play().catch(()=>{});
 
+
+// }
+
+function playSFX(src) {
+  if (!src) {
+    // 🔥 새 sfx 없으면 기존 소리 정지
+    sfxPlayer.pause();
+    sfxPlayer.currentTime = 0;
+    return;
+  }
+
+  sfxPlayer.src = src;
+  sfxPlayer.volume = 0.4;
+  sfxPlayer.play().catch(() => {});
+}
 
 
 
@@ -133,7 +150,9 @@ function renderPrompt_old(node, index) {
 
 
   // 효과음 있으면 재생
-  if (prompt.sfx) playSFX(prompt.sfx);
+  // if (prompt.sfx) playSFX(prompt.sfx);
+
+	playSFX(prompt.sfx);
 
 	// 🔹 텍스트 출력 방식 = 타이핑 으로 글자가 나오냐 그냥 나오냐
 	if (prompt.type == "normal_msg") {
@@ -169,7 +188,8 @@ function renderPrompt(node, index) {
 
 
 	// 효과음 있으면 재생
-  if (prompt.sfx) playSFX(prompt.sfx);
+  // if (prompt.sfx) playSFX(prompt.sfx);
+	playSFX(prompt.sfx);
 	
 	
   storyArea.innerHTML = '';
