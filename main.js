@@ -27,8 +27,8 @@ async function init() {
 }
 
 // 게임 시작 버튼 클릭 핸들러
-function startGame() {
-	// 3~8분 사이의 랜덤 시간 (초 단위)
+function startGameClickHandler() {
+	// 3~8분 사이의 랜덤 시간 (초 단위) 세팅
 	gameState.timeLimit = Math.floor(Math.random() * (8 - 3 + 1) + 3) * 60;
 	gameState.timeRemaining = gameState.timeLimit;
 
