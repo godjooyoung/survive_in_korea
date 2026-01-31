@@ -1,4 +1,4 @@
-// 게임 상태 관리	
+// 게임 상태 관리
 let gameState = {
 	timeLimit: 0, // 초 단위
 	timeRemaining: 0,
@@ -32,16 +32,16 @@ sfxPlayer.loop = false;
 
 // 1. 스토리데이터 불러오는 함수
 async function loadStory() {
-  const res = await fetch("/data/story.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("story.json load failed");
-  STORY = await res.json();
+	const res = await fetch("/data/story.json", { cache: "no-store" });
+	if (!res.ok) throw new Error("story.json load failed");
+	STORY = await res.json();
 }
 
 
 
 function updateStatusBar() {
-  const percent = (gameState.timeRemaining / gameState.timeLimit) * 100;
-  statusBar.style.width = percent + '%';
+	const percent = (gameState.timeRemaining / gameState.timeLimit) * 100;
+	statusBar.style.width = percent + '%';
 }
 
 
@@ -49,18 +49,18 @@ function renderChoices(choices) {
 
 	buttonWrap.innerHTML = '';
 
-  const wrap = document.createElement('div');
-  wrap.className = 'choice_wrap';
+	const wrap = document.createElement('div');
+	wrap.className = 'choice_wrap';
 
-  choices.forEach(choice => {
-    const btn = document.createElement('div');
-    btn.className = 'g_button';
-    btn.innerText = choice.text;
-    btn.onclick = () => goToEpisode(choice.next);
+	choices.forEach(choice => {
+		const btn = document.createElement('div');
+		btn.className = 'g_button';
+		btn.innerText = choice.text;
+		btn.onclick = () => goToEpisode(choice.next);
 		wrap.appendChild(btn);
-  });
+	});
 
-  buttonWrap.appendChild(wrap);
+	buttonWrap.appendChild(wrap);
 }
 
 
@@ -69,10 +69,10 @@ let bgmPlayer = new Audio();
 bgmPlayer.loop = true;
 
 function playBGM(src) {
-  if (bgmPlayer.src.includes(src)) return;
-  bgmPlayer.src = src;
-  bgmPlayer.volume = 0.5;
-  bgmPlayer.play().catch(()=>{});
+	if (bgmPlayer.src.includes(src)) return;
+	bgmPlayer.src = src;
+	bgmPlayer.volume = 0.5;
+	bgmPlayer.play().catch(() => { });
 }
 
 // function playSFX(src) {
@@ -84,56 +84,56 @@ function playBGM(src) {
 // }
 
 function playSFX(src) {
-  if (!src) {
-    // 🔥 새 sfx 없으면 기존 소리 정지
-    sfxPlayer.pause();
-    sfxPlayer.currentTime = 0;
-    return;
-  }
+	if (!src) {
+		// 🔥 새 sfx 없으면 기존 소리 정지
+		sfxPlayer.pause();
+		sfxPlayer.currentTime = 0;
+		return;
+	}
 
-  sfxPlayer.src = src;
-  sfxPlayer.volume = 0.4;
-  sfxPlayer.play().catch(() => {});
+	sfxPlayer.src = src;
+	sfxPlayer.volume = 0.4;
+	sfxPlayer.play().catch(() => { });
 }
 
 
 
 // 2. 다음 라인 진행
 function nextLine(node, index) {
-  const nextIndex = index + 1;
+	const nextIndex = index + 1;
 
-  if (nextIndex < node.prompts.length) {
-    renderPrompt(node, nextIndex);
-  } else {
-    goToEpisode(node.next);
-  }
+	if (nextIndex < node.prompts.length) {
+		renderPrompt(node, nextIndex);
+	} else {
+		goToEpisode(node.next);
+	}
 }
 
 // 이미지 처리 함수 
 function updateSceneImage(imgPath) {
-  if (imgPath) {
-    imageWrap.style.backgroundImage = `url(${imgPath})`;
-    imageWrap.style.backgroundColor = 'transparent';
-  } else {
-    imageWrap.style.backgroundImage = 'none';
-    imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
-  }
+	if (imgPath) {
+		imageWrap.style.backgroundImage = `url(${imgPath})`;
+		imageWrap.style.backgroundColor = 'transparent';
+	} else {
+		imageWrap.style.backgroundImage = 'none';
+		imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
+	}
 }
 
 
 // 3. 프롬프트 랜더링 함수
 function renderPrompt_old(node, index) {
-  const prompt = node.prompts[index];
-  if (!prompt) return;
+	const prompt = node.prompts[index];
+	if (!prompt) return;
 
-  // 이미지 처리
-  if (prompt.img) {
+	// 이미지 처리
+	if (prompt.img) {
 		updateSceneImage(prompt.img);
-  } else {
-    updateSceneImage();
-  }
+	} else {
+		updateSceneImage();
+	}
 
-  // 텍스트 출력 버블 생성
+	// 텍스트 출력 버블 생성
 	const bubble = document.createElement('div');
 	bubble.className = `story_bubble ${prompt.type}`;
 	storyWrap.innerHTML = "";
@@ -149,8 +149,8 @@ function renderPrompt_old(node, index) {
 	}
 
 
-  // 효과음 있으면 재생
-  // if (prompt.sfx) playSFX(prompt.sfx);
+	// 효과음 있으면 재생
+	// if (prompt.sfx) playSFX(prompt.sfx);
 
 	playSFX(prompt.sfx);
 
@@ -164,7 +164,7 @@ function renderPrompt_old(node, index) {
 			}
 		});
 	} else {
-  	// 즉시 출력
+		// 즉시 출력
 		bubble.innerHTML = prompt.text;
 
 		if (node.type == 'lines') showNextButton();
@@ -175,61 +175,61 @@ function renderPrompt_old(node, index) {
 }
 
 function renderPrompt(node, index) {
-  const prompt = node.prompts[index];
+	const prompt = node.prompts[index];
 
 	if (!prompt) return;
 
-  // 이미지 처리
-  if (prompt.img) {
+	// 이미지 처리
+	if (prompt.img) {
 		updateSceneImage(prompt.img);
-  } else {
-    updateSceneImage();
-  }
+	} else {
+		updateSceneImage();
+	}
 
 
 	// 효과음 있으면 재생
-  // if (prompt.sfx) playSFX(prompt.sfx);
+	// if (prompt.sfx) playSFX(prompt.sfx);
 	playSFX(prompt.sfx);
-	
-	
-  storyArea.innerHTML = '';
-  buttonWrap.innerHTML = ''; // 버튼 영역 항상 초기화
 
-  const bubble = document.createElement('div');
-  bubble.className = `story_bubble ${prompt.type}`;
-  storyArea.appendChild(bubble);
 
-  function showNextButton() {
-    const btn = document.createElement('div');
-    btn.className = 'g_button';
-    btn.innerText = '다음';
-    btn.onclick = () => nextLine(node, index);
-    buttonWrap.appendChild(btn);
-  }
+	storyArea.innerHTML = '';
+	buttonWrap.innerHTML = ''; // 버튼 영역 항상 초기화
+
+	const bubble = document.createElement('div');
+	bubble.className = `story_bubble ${prompt.type}`;
+	storyArea.appendChild(bubble);
+
+	function showNextButton() {
+		const btn = document.createElement('div');
+		btn.className = 'g_button';
+		btn.innerText = '다음';
+		btn.onclick = () => nextLine(node, index);
+		buttonWrap.appendChild(btn);
+	}
 
 
 
 	const isLastPrompt = index === node.prompts.length - 1;
 
 	function afterTextRender() {
-    if (node.type == 'lines') {
-      showNextButton();
-    }
+		if (node.type == 'lines') {
+			showNextButton();
+		}
 
-    if (node.type == 'choice' && isLastPrompt) {
-      renderChoices(node.choices); // 🔥 선택지만 표시
-    }
-  }
+		if (node.type == 'choice' && isLastPrompt) {
+			renderChoices(node.choices); // 🔥 선택지만 표시
+		}
+	}
 
 
 
-	 // 텍스트 출력
-  if (prompt.type == "normal_msg") {
-    typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
-  } else {
-    bubble.innerHTML = prompt.text;
-    afterTextRender();
-  }
+	// 텍스트 출력
+	if (prompt.type == "normal_msg") {
+		typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
+	} else {
+		bubble.innerHTML = prompt.text;
+		afterTextRender();
+	}
 
 }
 
@@ -240,76 +240,76 @@ function renderPrompt(node, index) {
 
 // 4. 에피소드 랜더링 함수
 function renderEpisode(epId) {
-  const node = STORY.nodes[epId];
-  if (!node) return;
+	const node = STORY.nodes[epId];
+	if (!node) return;
 
-  // 화면 초기화
-  // imageWrap.innerHTML = '';
-  // storyWrap.innerHTML = '';
+	// 화면 초기화
+	// imageWrap.innerHTML = '';
+	// storyWrap.innerHTML = '';
 
 	storyArea.innerHTML = '';
-  buttonWrap.innerHTML = '';
+	buttonWrap.innerHTML = '';
 
-  // 🎵 BGM 변경
-  if (node.bgm) {
-    playBGM(node.bgm);
-  }
+	// 🎵 BGM 변경
+	if (node.bgm) {
+		playBGM(node.bgm);
+	}
 
-  // 첫 프롬프트 출력
-  renderPrompt(node, 0);
+	// 첫 프롬프트 출력
+	renderPrompt(node, 0);
 }
 
 // 5. 에피소드 이동 함수
 function goToEpisode(epId) {
-  gameState.currentEpisode = epId;
-  gameState.currentPromptIndex = 0;
-  renderEpisode(epId);
+	gameState.currentEpisode = epId;
+	gameState.currentPromptIndex = 0;
+	renderEpisode(epId);
 }
 
 
 
 // 타이핑 함수
 function typeWriterEffect(element, htmlText, speed = 30, callback) {
-  let i = 0;
-  let text = htmlText.replace(/<br\s*\/?>/gi, "\n"); // 줄바꿈 처리
-  element.innerHTML = "";
+	let i = 0;
+	let text = htmlText.replace(/<br\s*\/?>/gi, "\n"); // 줄바꿈 처리
+	element.innerHTML = "";
 
-  function type() {
-    if (i < text.length) {
-      if (text[i] === "\n") {
-      	element.innerHTML += "<br/>";
-      } else {
-        element.innerHTML += text[i];
-      }
-      i++;
-      setTimeout(type, speed);
-    } else if (callback) {
-      callback();
-    }
-  }
+	function type() {
+		if (i < text.length) {
+			if (text[i] === "\n") {
+				element.innerHTML += "<br/>";
+			} else {
+				element.innerHTML += text[i];
+			}
+			i++;
+			setTimeout(type, speed);
+		} else if (callback) {
+			callback();
+		}
+	}
 
-  type();
+	type();
 }
 
 
 function startLifeTimer() {
-  const min = 3 * 60;
-  const max = 5 * 60;
-  gameState.timeLimit = Math.floor(Math.random() * (max - min + 1)) + min;
-  gameState.timeRemaining = gameState.timeLimit;
+	const min = 3 * 60;
+	const max = 5 * 60;
+	gameState.timeLimit = Math.floor(Math.random() * (max - min + 1)) + min;
+	gameState.timeRemaining = gameState.timeLimit;
 
-  updateStatusBar(); // 시작 시 100%
+	updateStatusBar(); // 시작 시 100%
 
-  gameState.timerInterval = setInterval(() => {
-    gameState.timeRemaining--;
+	gameState.timerInterval = setInterval(() => {
+		gameState.timeRemaining--;
 
-    updateStatusBar();
+		updateStatusBar();
 
-    if (gameState.timeRemaining <= 0) {
-      clearInterval(gameState.timerInterval);
-      goToEpisode('ep_end');
-    }
-  }, 1000);
+		if (gameState.timeRemaining <= 0) {
+			clearInterval(gameState.timerInterval);
+			goToEpisode('ep_end');
+		}
+	}, 1000);
 }
 
 
@@ -318,9 +318,9 @@ startBtn.addEventListener('click', async () => {
 	// 노필터 삭제하기
 	imageWrap.classList.remove('no_filter');
 	gameTitle.style.display = 'none';
-  await loadStory();
-  startLifeTimer();     // 생존 타이머 시작
-  goToEpisode('ep1');   // 무조건 ep1 시작
+	await loadStory();
+	startLifeTimer();     // 생존 타이머 시작
+	goToEpisode('ep1');   // 무조건 ep1 시작
 });
 
 
