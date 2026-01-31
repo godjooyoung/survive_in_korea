@@ -1,10 +1,31 @@
 {
   "start": "ep1",
   "nodes": {
+		"ep_clear": {
+      "type": "lines",
+			"ep_ko": "재능",
+      "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"0",
+      "prompts": [
+        { "type": "system_msg", "text": "클리어했습니다!! 읽는속도가 너무 빠릅니다!!", "sfx":"/assets/audio/sfx/sys_bell.mp3"},
+				{ "type": "normal_msg", "text": "뭐야? 죽는다고?..."},
+				{ "type": "normal_msg", "text": "갑자기?"},
+				
+				{ "type": "system_msg", "text": "[사망 원인: 노화]"},
+				{ "type": "normal_msg", "text": "..."},
+				{ "type": "normal_msg", "text": "......"},
+				{ "type": "normal_msg", "text": "........."},
+				{ "type": "normal_msg", "text": "운석도, 몬스터도, 미친 음식들도..<br/>세상은 나를 죽이진 못했다.<br/>살기 많이 빡셌던거 같은데<br/>...그래, 생각보다 지낼만했지?"},
+				{ "type": "normal_msg", "text": "어쩌면 세상은 생각보다<br/>우리를 쉽게 죽이지 못한다."},
+				{ "type": "system_msg", "text": "[엔딩]"}
+      ]
+			,"next": "ep1"
+    },
 		"ep_end": {
       "type": "lines",
 			"ep_ko": "죽음",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"0",
       "prompts": [
         { "type": "system_msg", "text": "[알림] 사망합니다.", "sfx":"/assets/audio/sfx/sys_bell.mp3"},
 				{ "type": "normal_msg", "text": "뭐야? 죽는다고?..."},
@@ -24,6 +45,7 @@
       "type": "lines",
 			"ep_ko": "망한 한국",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"145",
       "prompts": [
         { "type": "normal_msg", "text": "2026년 한국.", "img": "/assets/images/world_001.webp", "sfx":"/assets/audio/sfx/type_s.mp3"},
 				{ "type": "normal_msg", "text": "망했다.<br/>아니, 망한 줄 알았다...<br/>말도 안되는 시스템창에,<br/>던전이니..<br/>게이트니..", "sfx":"/assets/audio/sfx/type_l.mp3" },
@@ -39,6 +61,7 @@
       "type": "lines",
 			"ep_ko": "배고픈 주인공",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"73",
       "prompts": [
 				{ "type": "normal_msg", "text": "눈을 떴다..."},
 				{ "type": "normal_msg", "text": "천장도 멀쩡하고, 세상도… "},
@@ -52,6 +75,7 @@
     "ep3": {
       "type": "choice",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"44",
       "prompts": [{ "type": "normal_msg", "text": "선택지가..이거뿐일까..<br/> 하..뭐먹지..?", "img": "/assets/images/food_001.webp"}],
       "choices": [
         { "c_id":"1", "text": "초록으로 빛나는 떡볶이", "next": "ep3_1" },
@@ -64,6 +88,7 @@
 		"ep3_1": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"116",
       "prompts": [
 				{ "type": "normal_msg", "text": "하...이거 정말 먹어도 되나?..<br/>말차맛..?", "img": "/assets/images/food_001_1.webp"},
 				{ "type": "effect_msg", "text": "쫀-득!"},
@@ -82,6 +107,7 @@
 		"ep3_2": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"148",
       "prompts": [
 				{ "type": "normal_msg", "text": "솔직히..<br/>이게 제일 맛있어보인다.<br/>...먹어볼까", "img": "/assets/images/food_001_3.webp"},
 				{ "type": "normal_msg", "text": "... 뭐지, 이 소리는?<br/>왠지 편안해지는 기분이다", "sfx":"/assets/audio/sfx/butta.mp3"},
@@ -98,6 +124,7 @@
 		"ep3_3": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"106",
       "prompts": [
 				{ "type": "normal_msg", "text": "...<br/>뭔가 신성해 보인다..<br/>목에 구멍 나진 않겠지?", "img": "/assets/images/food_001_2.webp"},
 				{ "type": "normal_msg", "text": "으으.. 목이 타는것 같다."},
@@ -111,6 +138,7 @@
 		"ep3_4": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"176",
       "prompts": [
 				{ "type": "normal_msg", "text": "...<br/>선택지..극악이노..<br/>차라리 굶자"},
 				{ "type": "system_msg", "text": "[상태: 허기짐]<br/>음식을 섭취하세요.<br/>공복이 계속되면 위험합니다.", "sfx":"/assets/audio/sfx/sys_bell.mp3"},
@@ -132,6 +160,7 @@
 		"ep4": {
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"388",
       "prompts": [
 				{ "type": "effect_msg", "text": "웅성웅성"},
 				{ "type": "normal_msg", "text": "아직도 시장을 하는구나...<br/>사람 사는 냄새가 나는 것 같다.<br/>왠지모르게 힐링이네..", "img": "/assets/images/market.webp"},
