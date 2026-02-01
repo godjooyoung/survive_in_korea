@@ -2,6 +2,7 @@
   "start": "ep1",
   "nodes": {
 		"ep_clear": {
+			"id":"ep_clear",
       "type": "lines",
 			"ep_ko": "재능",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
@@ -19,9 +20,10 @@
 				{ "type": "normal_msg", "text": "어쩌면 세상은 생각보다<br/>우리를 쉽게 죽이지 못한다."},
 				{ "type": "system_msg", "text": "[엔딩]"}
       ]
-			,"next": "ep1"
+			,"next": ["ep1"]
     },
 		"ep_end": {
+			"id":"ep_end",
       "type": "lines",
 			"ep_ko": "죽음",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
@@ -39,9 +41,10 @@
 				{ "type": "normal_msg", "text": "어쩌면 세상은 생각보다<br/>우리를 쉽게 죽이지 못한다."},
 				{ "type": "system_msg", "text": "[엔딩]"}
       ]
-			,"next": "ep1"
+			,"next": ["ep1"]
     },
     "ep1": {
+			"id":"ep1",
       "type": "lines",
 			"ep_ko": "망한 한국",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
@@ -55,9 +58,10 @@
         { "type": "normal_msg", "text": "우리는 정답은 모르지만<br/>오래 지나지 않아 이상함에 적응해버렸다.", "img": "/assets/images/world_003.webp"},
         { "type": "normal_msg", "text": "이 미쳐버린 한국에서 <br/>살아남을 수 있을까?..."}
       ],
-      "next": "ep2"
+      "next": ["ep2"]
     },
     "ep2": {
+			"id":"ep2",
       "type": "lines",
 			"ep_ko": "배고픈 주인공",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
@@ -70,22 +74,24 @@
 				{ "type": "normal_msg", "text": "어제 저녁을 건너뛴 게 기억났다.<br/>이런 세상에서도<br/>배는 여전히 제시간에 고프다."},
 				{ "type": "normal_msg", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp"}
       ],
-      "next": "ep3"
+      "next": ["ep3"]
     },
     "ep3": {
+			"id":"ep3",
       "type": "choice",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"44",
       "prompts": [{ "type": "normal_msg", "text": "선택지가..이거뿐일까..<br/> 하..뭐먹지..?", "img": "/assets/images/food_001.webp"}],
       "choices": [
-        { "c_id":"1", "text": "초록으로 빛나는 떡볶이", "next": "ep3_1" },
-        { "c_id":"2", "text": "해골 바가지 팥빙수", "next": "ep3_2" },
-        { "c_id":"3", "text": "깨진 유리병 소주", "next": "ep3_3" },
-				{ "c_id":"4", "text": "두쫀쿠...?", "next": "ep3_4" },
-				{ "c_id":"5", "text": "굶는다.", "next": "ep3_5" }
+        { "c_id":"1", "text": "초록으로 빛나는 떡볶이", "next": ["ep3_1"] },
+        { "c_id":"2", "text": "해골 바가지 팥빙수", "next": ["ep3_2"] },
+        { "c_id":"3", "text": "깨진 유리병 소주", "next": ["ep3_3"] },
+				{ "c_id":"4", "text": "두쫀쿠...?", "next": ["ep3_4"] },
+				{ "c_id":"5", "text": "굶는다.", "next": ["ep3_5"] }
       ]
     },
 		"ep3_1": {
+			"id":"ep3_1",
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"116",
@@ -102,9 +108,10 @@
 				{ "type": "normal_msg", "text": "?!!", "img": "/assets/images/flyhuman.webp"},
 				{ "type": "normal_msg", "text": "그렇게 난 날라온 운석에 맡고 팅겨져 이곳에 도착했다.", "img": "/assets/images/market.webp"}
       ],
-      "next": "ep4"
+      "next": ["ep4"]
     },
 		"ep3_2": {
+			"id":"ep3_2",
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"148",
@@ -119,9 +126,10 @@
 				{ "type": "normal_msg", "text": "그렇게 난 황당하게 몬스터가 있었던 자리를 쳐다봤다."},
 				{ "type": "normal_msg", "text": "아.. 저기 시장이 있었지.. 시장이 아직 하나..?", "img": "/assets/images/market.webp"}
       ],
-      "next": "ep4"
+      "next": ["ep4"]
     },
 		"ep3_3": {
+			"id":"ep3_3",
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"106",
@@ -133,9 +141,33 @@
 				{ "type": "system_msg", "text": "스트레스 지수가 내려갑니다.<br/>회피도 좋은 힐링이네요."},
 				{ "type": "normal_msg", "text": "어..이제 보인다!<br/>일단 밖이나 나가볼까.."}
       ],
-      "next": "ep4"
+      "next": ["ep4"]
     },
 		"ep3_4": {
+			"id":"ep3_4",
+      "type": "lines",
+      "bgm": "/assets/audio/bgm/theme_008.mp3",
+			"totalCnt":"176",
+      "prompts": [
+				{ "type": "normal_msg", "text": "..두쫀쿠...두바이쫀득쿠카..?"},
+				{ "type": "system_msg", "text": "[상태: 허기짐]<br/>음식을 섭취하세요.<br/>공복이 계속되면 위험합니다.", "sfx":"/assets/audio/sfx/sys_bell.mp3"},
+				{ "type": "normal_msg", "text": "하..배고픈데..<br/>아냐, 저딴걸 먹을 순 없어."},
+				{ "type": "normal_msg", "text": "..."},
+				{ "type": "system_msg", "text": "[상태: 쓰러짐]<br/>정신을 잃습니다.","sfx":"/assets/audio/sfx/sys_bell.mp3"},
+				{ "type": "normal_msg", "text": "하..그래..이대로 죽는것도.."},
+				{ "type": "normal_msg", "text": "..."},
+				{ "type": "normal_msg", "text": "......"},
+				{ "type": "effect_msg", "text": "웅성웅성"},
+				{ "type": "system_msg", "text": "[버프: 다이어터의 존경]<br/>다이어터의 존경을 받습니다.","sfx":"/assets/audio/sfx/sys_bell.mp3"},
+				{ "type": "normal_msg", "text": "안죽는다고?"},
+				{ "type": "system_msg", "text": "다이어터들은 굶는 당신을 보고<br/>눈물을 흘립니다.<br/>그들에게 '굶음'은 신성한 행위입니다.<br/>그들이 쓰러진 당신을 병원으로 이송해 살렸습니다.","sfx":"/assets/audio/sfx/sys_bell.mp3"},
+				{ "type": "effect_msg", "text": "??씨, 퇴원하셔야합니다."},
+				{ "type": "normal_msg", "text": "하..일단 나가볼까.."}
+      ],
+      "next": ["ep3_4_1","ep3_4_2","ep3_4_3"]
+    },
+		"ep3_5": {
+			"id":"ep3_5",
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"176",
@@ -155,9 +187,10 @@
 				{ "type": "effect_msg", "text": "??씨, 퇴원하셔야합니다."},
 				{ "type": "normal_msg", "text": "하..일단 나가볼까.."}
       ],
-      "next": "ep4"
+      "next": ["ep4"]
     },
 		"ep4": {
+			"id":"ep4",
       "type": "lines",
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"388",
@@ -188,7 +221,7 @@
 				{ "type": "effect_msg", "text": "??씨, 퇴원하셔야합니다."},
 				{ "type": "normal_msg", "text": "하..일단 나가볼까.."}
       ],
-      "next": "ep4"
+      "next": ["ep4"]
     }
   }
 }

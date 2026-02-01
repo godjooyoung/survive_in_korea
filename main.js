@@ -243,6 +243,38 @@ function renderPrompt(node, index) {
 		buttonWrap.appendChild(wrap);
 	}
 
+	// 클리어나 종료시 보일 마지막 버튼
+	function showClearButtons() {
+		buttonWrap.innerHTML = "";
+
+		const wrap = document.createElement("div");
+		wrap.className = "choice_wrap"; // 기존 스타일 재사용
+
+		// 1) 처음으로
+		const restartBtn = document.createElement("div");
+		restartBtn.className = "g_button";
+		restartBtn.innerText = "처음으로";
+		restartBtn.onclick = () => {
+			// TODO 저장 기능 완성 후
+  		// saveGame();  // 있으면 저장 먼저 하고
+  		window.location.reload();
+		};
+
+		// // 2) TODO 저장
+		// const saveBtn = document.createElement("div");
+		// saveBtn.className = "g_button";
+		// saveBtn.innerText = "저장";
+		// saveBtn.onclick = () => {
+		// 	// 일단 훅만 걸어두기: 저장 로직은 나중에
+		// 	// saveGame();
+		// 	console.log("SAVE:", gameState);
+		// };
+
+		wrap.appendChild(restartBtn);
+		// wrap.appendChild(saveBtn);
+		buttonWrap.appendChild(wrap);
+	}
+
 
 	const isLastPrompt = index == node.prompts.length - 1;
 
@@ -299,7 +331,25 @@ function renderEpisode(epId) {
 }
 
 // 에피소드 이동 함수
-function goToEpisode(epId) {
+function goToEpisode(epIds) {
+	let epId;
+
+	// 기존 스트링 형태에서 문자열 배열 형태로 변경
+	if (!epIds || (Array.isArray(epIds) && epIds.length == 0)) {
+		// 1) epIds가 없거나 빈 배열이면 → 클리어 루트
+		epId = null;
+	} else if (Array.isArray(epIds)) {
+		// 2) 배열이면 랜덤 선택
+		const randIndex = Math.floor(Math.random() * epIds.length);
+		epId = epIds[randIndex];
+	} else if (typeof epIds == "string") {
+		// 3) 문자열이면 그대로
+		epId = epIds;
+	} else {
+		// 4) 그 외 타입은 방어
+		epId = null;
+	}
+
 	gameState.currentEpisode = epId;
 	gameState.currentPromptIndex = 0;
 	renderEpisode(epId);
@@ -308,6 +358,9 @@ function goToEpisode(epId) {
 
 // 게임 시작 버튼 클릭
 startBtn.addEventListener('click', async () => {
+	// TODO 로드 스토리 안될때 트라이 캐치로 예외걸기
+	playBGM("/assets/audio/bgm/theme_008.mp3");
+
 	// 노필터 삭제하기
 	imageWrap.classList.remove('no_filter');
 	gameTitle.style.display = 'none';
