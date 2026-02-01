@@ -50,7 +50,7 @@
       "bgm": "/assets/audio/bgm/theme_008.mp3",
 			"totalCnt":"145",
       "prompts": [
-        { "type": "normal_msg", "text": "2026년 한국.", "img": "/assets/images/world_001.webp", "sfx":"/assets/audio/sfx/type_s.mp3"},
+        { "type": "normal_msg", "text": "2026년 한국.", "sceneEffect":"shake", "img": "/assets/images/world_001.webp", "sfx":"/assets/audio/sfx/type_s.mp3"},
 				{ "type": "normal_msg", "text": "망했다.<br/>아니, 망한 줄 알았다...<br/>말도 안되는 시스템창에,<br/>던전이니..<br/>게이트니..", "sfx":"/assets/audio/sfx/type_l.mp3" },
 				{ "type": "normal_msg", "text": "...", "img": "/assets/images/world_002.webp",  "sfx":"/assets/audio/sfx/jijijig.mp3"},
 				{ "type": "normal_msg", "text": "어떤 사람은..<br/>자기가 읽던 판타지소설이<br/>드디어 현실이 되었다고 하고..<br/>어떤 이는<br/>AI가 세상을 최적화 하는<br/>과정에서<br/>한국만 오류가 났다나..?" , "sfx":"/assets/audio/sfx/type_l.mp3"},
@@ -69,10 +69,10 @@
       "prompts": [
 				{ "type": "normal_msg", "text": "눈을 떴다..."},
 				{ "type": "normal_msg", "text": "천장도 멀쩡하고, 세상도… "},
-				{ "type": "normal_msg", "text": "대충 멀쩡해 보였다.", "img": "/assets/images/world_003.webp"},
+				{ "type": "normal_msg", "text": "대충 멀쩡해 보였다.", "introDelay":"800", "img": "/assets/images/world_003.webp"},
 				{ "type": "normal_msg", "text": "배고프네...", "sfx":"/assets/audio/sfx/hungry.mp3"},
 				{ "type": "normal_msg", "text": "어제 저녁을 건너뛴 게 기억났다.<br/>이런 세상에서도<br/>배는 여전히 제시간에 고프다."},
-				{ "type": "normal_msg", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp"}
+				{ "type": "normal_msg", "text": "뭐라도 좀 먹어볼까..<br/>어디 보자...먹을게....", "img": "/assets/images/food_001.webp",  "sceneEffect":"shake_heavy"}
       ],
       "next": ["ep3"]
     },

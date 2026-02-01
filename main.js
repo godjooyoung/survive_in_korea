@@ -70,10 +70,17 @@ function playSFX(src) {
 }
 
 // 배경 이미지 처리 함수 
-function updateSceneImage(imgPath) {
+function updateSceneImage(prompt) {
+	// 연출 처리를 위한 이미지 패스 뿐 아니라, 연출 정보도 매개변수로 받음
+	let imgPath   = prompt.img;
+	let imgEffect = prompt.sceneEffect;
+
 	if (imgPath) {
 		imageWrap.style.backgroundImage = `url(${imgPath})`;
 		imageWrap.style.backgroundColor = 'transparent';
+		if(imgEffect){
+			imageWrap.classList.add(imgEffect);
+		}
 	} else {
 		imageWrap.style.backgroundImage = 'none';
 		imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
@@ -177,27 +184,45 @@ function nextLine(node, index) {
 
 // 프롬프트 랜더링 함수 -> nextLine 호출 nextLine에서 다시 renderPrompt 호출하기도 함. 즉 이거 두개는 서로 연관 
 function renderPrompt(node, index) {
-	const prompt = node.prompts[index];
 
+	const prompt = node.prompts[index];
+	
 	if (!prompt) return;
 
-	// 이미지 처리
-	if (prompt.img) {
-		updateSceneImage(prompt.img);
-	} else {
-		updateSceneImage();
-	}
-
-	// 효과음 재생
-	playSFX(prompt.sfx);
-
+	const delayTime = prompt.introDelay?prompt.introDelay:0;
+	const isClear = node.id == clearEpId ? true : false;
+	const isLastPrompt = index == node.prompts.length - 1;
 
 	storyArea.innerHTML = '';
-	buttonWrap.innerHTML = ''; // 버튼 영역 항상 초기화
+	buttonWrap.innerHTML = ''; 
+	
+	//연출 다 제거
+	imageWrap.classList.remove("shake", "shake__heavy");
 
-	const bubble = document.createElement('div');
-	bubble.className = `story_bubble ${prompt.type}`;
-	storyArea.appendChild(bubble);
+	// 이미지 처리
+	updateSceneImage(prompt);
+	
+	// TODO 딜레이타임 잇을경우 이미지 연출 후 딜레이 된다음 텍스트 연출
+	setTimeout(() => {
+		// 효과음 재생
+		playSFX(prompt.sfx);
+
+		const bubble = document.createElement('div');
+		bubble.className = `story_bubble ${prompt.type}`;
+
+		// 버블 돔 요소 붙이기
+		storyArea.appendChild(bubble);
+		
+		// 텍스트 출력 동작 부분
+		if (prompt.type == "normal_msg") {
+			typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
+		} else {
+			bubble.innerHTML = prompt.text;
+			afterTextRender();
+		}
+
+	}, delayTime);
+
 
 	// 데이터 타입이 라인일때 마지막 프롬프트까지 도달하면 다음 버튼 생성 하기 위한 내부 함수
 	function showNextButton() {
@@ -256,8 +281,8 @@ function renderPrompt(node, index) {
 		restartBtn.innerText = "처음으로";
 		restartBtn.onclick = () => {
 			// TODO 저장 기능 완성 후
-  		// saveGame();  // 있으면 저장 먼저 하고
-  		window.location.reload();
+			// saveGame();  // 있으면 저장 먼저 하고
+			window.location.reload();
 		};
 
 		// // 2) TODO 저장
@@ -275,35 +300,29 @@ function renderPrompt(node, index) {
 		buttonWrap.appendChild(wrap);
 	}
 
-
-	const isLastPrompt = index == node.prompts.length - 1;
-
 	// 주어진 프롬프트가 다 랜더링 되고 난 다음 동작할 함수
 	// 다음 버튼을 보여주거나, 선택지 버튼을 보여준다.
 	// 다음버튼이나 선택지 버튼엔 다른 에피소드로 갈수있는 연결 키가 존재
 	function afterTextRender() {
-		if (node.type == 'lines') {
-			showNextButton();
-		}
 
-		if (node.type == 'choice' && isLastPrompt) {
-			showChoiceButton(node.choices);
-		}
+		if(!isClear){
+			if (node.type == 'lines') {
+				showNextButton();
+			}
 
-		// 타입이 그냥 줄글이든, 선택이든 마지막 프롬프트에 도달한 시점에 
-		// 통계 데이터 업데이트
-		if (isLastPrompt) {
-			applyEpisodeStats(node);
-		}
-	}
+			if (node.type == 'choice' && isLastPrompt) {
+				showChoiceButton(node.choices);
+			}
 
-	// TODO 분기 추가 엔딩이나 죽음 노드가 아닐경우 기존 로직 그대로 수행, 만약 엔딩이나 죽음 노드일 경우
-	// 텍스트 출력
-	if (prompt.type == "normal_msg") {
-		typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
-	} else {
-		bubble.innerHTML = prompt.text;
-		afterTextRender();
+			// 타입이 그냥 줄글이든, 선택이든 마지막 프롬프트에 도달한 시점에 
+			// 통계 데이터 업데이트
+			if (isLastPrompt) {
+				applyEpisodeStats(node);
+			}
+		}else{
+			showClearButtons()
+		}
+		
 	}
 
 }
