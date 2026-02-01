@@ -51,7 +51,7 @@ function updateStatusBar() {
 function playBGM(src) {
 	if (bgmPlayer.src.includes(src)) return;
 	bgmPlayer.src = src;
-	bgmPlayer.volume = 0.5;
+	bgmPlayer.volume = 0.3;
 	bgmPlayer.play().catch(() => { });
 }
 
@@ -65,7 +65,7 @@ function playSFX(src) {
 	}
 
 	sfxPlayer.src = src;
-	sfxPlayer.volume = 0.4;
+	sfxPlayer.volume = 0.6;
 	sfxPlayer.play().catch(() => { });
 }
 
