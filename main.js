@@ -3,19 +3,19 @@ let gameState = {
 	timeLimit: 0, // 초 단위
 	timeRemaining: 0,
 	timerInterval: null,
-	currentEpisode : "ep1",
-	currentChoosenCnt : 0,
-	currentReadTextCnt : 0,
+	currentEpisode: "ep1",
+	currentChoosenCnt: 0,
+	currentReadTextCnt: 0,
 
 	/* 통계값 */
-  readTextCnt: 0,          // 누적 읽은 활자수 (episode.totalCnt 누적)
-  choiceMomentCnt: 0,      // choice 에피소드 진입 횟수
-  choiceOptionCnt: 0,      // 누적 선택지 수(choices.length 누적)
+	readTextCnt: 0,          // 누적 읽은 활자수 (episode.totalCnt 누적)
+	choiceMomentCnt: 0,      // choice 에피소드 진입 횟수
+	choiceOptionCnt: 0,      // 누적 선택지 수(choices.length 누적)
 };
 
 let STORY = null;
 
-const endEpId   = "ep_end";
+const endEpId = "ep_end";
 const clearEpId = "ep_clear";
 
 const gameTitle = document.querySelector('.game_title');
@@ -47,7 +47,6 @@ function updateStatusBar() {
 	statusBar.style.width = percent + '%';
 }
 
-
 // 배경음 재생
 function playBGM(src) {
 	if (bgmPlayer.src.includes(src)) return;
@@ -55,7 +54,6 @@ function playBGM(src) {
 	bgmPlayer.volume = 0.5;
 	bgmPlayer.play().catch(() => { });
 }
-
 
 // 효과음 재생
 function playSFX(src) {
@@ -81,7 +79,6 @@ function updateSceneImage(imgPath) {
 		imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
 	}
 }
-
 
 // 타이핑 함수
 function typeWriterEffect(element, htmlText, speed = 30, callback) {
@@ -122,39 +119,43 @@ function startLifeTimer() {
 
 		if (gameState.timeRemaining <= 0) {
 			clearInterval(gameState.timerInterval);
-			goToEpisode('ep_end');
+			goToEpisode(endEpId);
 		}
 	}, 1000);
 }
 
 
+// 시간이 남아있더라도 이 함수가 실행되면 더이상 실시간으로 생존 시간을 계산하지 않고 계산 로직 자체를 멈춘다.
+// 인터벌 객체 종료
+function pauseLifeTimer() {
+	if (!gameState.timerInterval) return;
+	clearInterval(gameState.timerInterval);
+	gameState.timerInterval = null;
+}
+
+
 // 통계 데이터를 위한 전역 상태 업데이트 하는 함수
 function applyEpisodeStats(ep) {
-	console.log('에피소드 마지막 다음 버튼 클릭, applyEpisodeStats 진입, 통계 기록 ')
-	let epType 				 = ep.type;
-	let epTextTotalCnt = ep.totalCnt; 
+	let epType = ep.type;
+	let epTextTotalCnt = ep.totalCnt;
 
 	// 1) 읽은 글자 수 누적
 	// 있을때 처리, 없거나 null이거나 undefiend 일땐 0으로 간주하고 더하지 않음. 0도 풀리쉬 값이므로 여기 해당 안됨
-	if(epTextTotalCnt){
-		if(typeof epTextTotalCnt == "string") {
+	if (epTextTotalCnt) {
+		if (typeof epTextTotalCnt == "string") {
 			epTextTotalCnt = Number(epTextTotalCnt);
 		}
 		gameState.readTextCnt += epTextTotalCnt
 	}
 
 	// 2) 마주했던 선택 순간 횟수 누적
-	if(epType == "choice"){
+	if (epType == "choice") {
 		gameState.choiceMomentCnt += 1;
 
 		if (Array.isArray(ep.choices)) {
-      gameState.choiceOptionCnt += ep.choices.length;
-    }
+			gameState.choiceOptionCnt += ep.choices.length;
+		}
 	}
-
-	console.log('::::: 통계 값 ::::::')
-	console.log(gameState)
-
 }
 
 
@@ -162,41 +163,6 @@ function applyEpisodeStats(ep) {
 /**
  * 게임 흐름 관련 함수
  */
-
-// 선택지 랜더링
-function renderChoices(choices) {
-	buttonWrap.innerHTML = '';
-
-	const wrap = document.createElement('div');
-	wrap.className = 'choice_wrap';
-
-	let locked = false; // 한 번 선택하면 잠금
-
-
-	choices.forEach(choice => {
-		const btn = document.createElement('div');
-		btn.className = 'g_button';
-		btn.innerText = choice.text;
-		/* 선택지 버튼 이벤트 바인딩 */
-		btn.onclick = () => {
-			if (locked) return;
-      locked = true;
-
-			// 선택한 버튼 색 변경된 거 보여주고,
-			// 나머지 선택 안된건 기존 색 유지, 즉 클릭된 애만 특정 css 클랙스명 추가해서 서택된 걸 사용자로 하여금 알도록 처리
-			// 1초 내지는 0.5초뒤에 다음 애피소드 이동 함수 
-
-			btn.classList.add("is_selected");
-			setTimeout(() => {
-        goToEpisode(choice.next);
-      }, 400);
-
-		};
-		wrap.appendChild(btn);
-	});
-
-	buttonWrap.appendChild(wrap);
-}
 
 // 텍스트 다음 라인 진행
 function nextLine(node, index) {
@@ -209,7 +175,7 @@ function nextLine(node, index) {
 	}
 }
 
-// 프롬프트 랜더링 함수
+// 프롬프트 랜더링 함수 -> nextLine 호출 nextLine에서 다시 renderPrompt 호출하기도 함. 즉 이거 두개는 서로 연관 
 function renderPrompt(node, index) {
 	const prompt = node.prompts[index];
 
@@ -242,24 +208,64 @@ function renderPrompt(node, index) {
 		buttonWrap.appendChild(btn);
 	}
 
+	// 데이터 타입이 선택지 일때 마지막 프롬프트까지 도달하면 선택지 랜더링 하기 위한 내부 함수
+	function showChoiceButton(choices) {
+		buttonWrap.innerHTML = '';
+
+		const wrap = document.createElement('div');
+		wrap.className = 'choice_wrap';
+
+		let locked = false; // 한 번 선택하면 잠금
+
+
+		choices.forEach(choice => {
+			const btn = document.createElement('div');
+			btn.className = 'g_button';
+			btn.innerText = choice.text;
+			/* 선택지 버튼 이벤트 바인딩 */
+			btn.onclick = () => {
+				if (locked) return;
+				locked = true;
+
+				// 선택한 버튼 색 변경된 거 보여주고,
+				// 나머지 선택 안된건 기존 색 유지, 즉 클릭된 애만 특정 css 클랙스명 추가해서 서택된 걸 사용자로 하여금 알도록 처리
+				// 1초 내지는 0.5초뒤에 다음 애피소드 이동 함수 
+
+				btn.classList.add("is_selected");
+				setTimeout(() => {
+					goToEpisode(choice.next);
+				}, 400);
+
+			};
+			wrap.appendChild(btn);
+		});
+
+		buttonWrap.appendChild(wrap);
+	}
+
+
 	const isLastPrompt = index == node.prompts.length - 1;
 
+	// 주어진 프롬프트가 다 랜더링 되고 난 다음 동작할 함수
+	// 다음 버튼을 보여주거나, 선택지 버튼을 보여준다.
+	// 다음버튼이나 선택지 버튼엔 다른 에피소드로 갈수있는 연결 키가 존재
 	function afterTextRender() {
 		if (node.type == 'lines') {
 			showNextButton();
 		}
 
 		if (node.type == 'choice' && isLastPrompt) {
-			renderChoices(node.choices);
+			showChoiceButton(node.choices);
 		}
 
 		// 타입이 그냥 줄글이든, 선택이든 마지막 프롬프트에 도달한 시점에 
 		// 통계 데이터 업데이트
-		if(isLastPrompt){
+		if (isLastPrompt) {
 			applyEpisodeStats(node);
 		}
 	}
 
+	// TODO 분기 추가 엔딩이나 죽음 노드가 아닐경우 기존 로직 그대로 수행, 만약 엔딩이나 죽음 노드일 경우
 	// 텍스트 출력
 	if (prompt.type == "normal_msg") {
 		typeWriterEffect(bubble, prompt.text, 25, afterTextRender);
@@ -272,10 +278,12 @@ function renderPrompt(node, index) {
 
 // 에피소드 랜더링 함수
 function renderEpisode(epId) {
-	console.log("renderEpisode 진입")
 	let node = STORY.nodes[epId];
+
 	if (!node) {
-		node =  STORY.nodes[clearEpId];
+		// 노드 객체가 없으면 타이머 종료후 클리어로 이동
+		pauseLifeTimer()
+		node = STORY.nodes[clearEpId];
 	}
 
 	storyArea.innerHTML = '';
@@ -298,8 +306,6 @@ function goToEpisode(epId) {
 }
 
 
-
-
 // 게임 시작 버튼 클릭
 startBtn.addEventListener('click', async () => {
 	// 노필터 삭제하기
@@ -309,6 +315,8 @@ startBtn.addEventListener('click', async () => {
 	startLifeTimer();     // 생존 타이머 시작
 	goToEpisode('ep1');   // 무조건 ep1 시작
 });
+
+// goToEpisode ->  renderEpisode -> renderPrompt (showNextButton, renderChoices / 통계 누적) 
 
 
 
