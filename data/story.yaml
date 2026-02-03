@@ -89,7 +89,6 @@ node_dict:
           인스타그램
           @survive.in.korea
         sfx_src: /assets/audios/sfx/sys_bell.mp3
-    
 
   ep1:
     node_id: ep1
@@ -201,6 +200,7 @@ node_dict:
           먹을게....
         img_src: /assets/images/food_001.webp
         scn_fx: shake
+        dly_ms: 700
     next_ids: [ep3]
 
   ep3:
@@ -217,15 +217,15 @@ node_dict:
     choices:
       - c_node_id: 1
         msg_tx: |-
-          초록으로 빛나는 떡볶이
+          떡볶이
         next_ids: [ep3_1]
       - c_node_id: 2
         msg_tx: |-
-          해골 그릇에 담긴 팥빙수
+          팥빙수
         next_ids: [ep3_2]
       - c_node_id: 3
         msg_tx: |-
-          깨진 초록병에 담긴 액체
+          물
         next_ids: [ep3_3]
       - c_node_id: 4
         msg_tx: |-
@@ -244,44 +244,92 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "하...이거 정말 먹어도 되나?..<br/>말차맛..?"
+          이거 먹어도 되나..
+          
+          말차맛 떡볶이..?
+          매생이맛 떡볶이..?
+
+          뭐야..도대체..
+          
+          떡볶이 인건 맞으니까
+          먹어보자!
         img_src: /assets/images/food_001_1.webp
       - msg_tp: effect_msg
         msg_tx: |-
-          "쫀-득!"
+          쫀-득!
       - msg_tp: effect_msg
         msg_tx: |-
-          "말~랑!"
-      - msg_tp: system_msg
-        msg_tx: |-
-          "[버프: 말랑쫀득 피부]"
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
+          말~랑!
       - msg_tp: normal_msg
         msg_tx: |-
-          "뭐지..? 생각보다 먹을만한데..?"
-      - msg_tp: effect_msg
+          뭐지..?
+          생각보다 먹을만한데..?
+
+          배도 채웠으니 나가볼까..
+      - msg_tp: normal_msg
+        sfx_src: /assets/audios/sfx/ding.mp3
         msg_tx: |-
-          "우다탕쾅쾅!!"
-        img_src: /assets/images/stone.webp
+          ...
+          이놈의 재난 경보는
+          쉴틈없이 울리네
+      - msg_tp: normal_msg
+        sfx_src: /assets/audios/sfx/ding.mp3
+        msg_tx: |-
+          ...
+          XXX동 주민들은 신속한 대피를
+          ...
+      - msg_tp: normal_msg
+        sfx_src: /assets/audios/sfx/ding.mp3
+        msg_tx: |-
+          ...
+          ......
+
+          XXX동이면 여긴데?
+        img_src: /assets/images/street_001.webp
+      - msg_tp: normal_msg
+        #TODO 사람들 패닉 효과음 넣기
+        sfx_src: /assets/audios/sfx/ding.mp3
+        img_src: /assets/images/street_002.webp
+        msg_tx: |-
+          ......!!
+      - msg_tp: effect_msg
+        #TODO 라디오 치지직 효과음 넣기
+        sfx_src: /assets/audios/sfx/jijijig.mp3
+        img_src: /assets/images/street_003.webp
+        msg_tx: |-
+          게이트발 운석이 ...
+          ... 주민들은 빠르게 대피를
       - msg_tp: normal_msg
         msg_tx: |-
-          "운석..? 나쁘지 않은 엔딩인데?<br/>하..드디어 미친 세상 하직하는구나-"
+          왠 불덩이가..?
+          아니, 지금 안내해주는게 의미가 있어?
+          
+          하...
+          이렇게 세상 하직하는구나-
       - msg_tp: effect_msg
         msg_tx: |-
-          "-디요오오옹-"
+          -디요오오옹-
         img_src: /assets/images/byebyestone.webp
       - msg_tp: system_msg
-        msg_tx: |-
-          "[말랑쫀득 피부]의 효과에 의해 충격 데미지가 사라집니다."
         sfx_src: /assets/audios/sfx/sys_bell.mp3
-      - msg_tp: normal_msg
         msg_tx: |-
-          "?!!"
+          방사능 떡볶이의 효과로
+          [버프:말랑쫀득 피부]를 얻었습니다.
+
+          일정 시간 동안
+          [버프:말랑쫀득 피부]의 효과에 의해
+          충격 데미지가 사라집니다.
+      - msg_tp: normal_msg
         img_src: /assets/images/flyhuman.webp
-      - msg_tp: normal_msg
         msg_tx: |-
-          "그렇게 난 날라온 운석에 맡고 팅겨져 이곳에 도착했다."
+          ?!!
+      - msg_tp: normal_msg
         img_src: /assets/images/market.webp
+        msg_tx: |-
+          그렇게 난
+          날라온 운석에 맡고
+          팅겨져 이곳에 도착했다.
+        
     next_ids: [ep4]
 
   ep3_2:

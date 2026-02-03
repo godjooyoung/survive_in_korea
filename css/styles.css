@@ -214,6 +214,7 @@ body {
 		margin: 15px;
     width: calc(100% - 30px);
 		color: #ffffff;
+		white-space: pre-wrap;
 
 		&.normal_msg {
 			background-color: #ffffff80;
