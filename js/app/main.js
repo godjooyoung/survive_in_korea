@@ -35,11 +35,25 @@ sfxPlayer.loop = false;
 
 
 // 스토리 데이터 패치 후 자바스크립트 객체로 변환해서 반환
+// async function loadStory() {
+// 	const res = await fetch("/data/story.json", { cache: "no-store" });
+// 	if (!res.ok) throw new Error("story.json load failed");
+// 	STORY = await res.json();
+// }
+
+// 스토리 데이터 패치 후 자바스크립트 객체로 변환해서 반환
 async function loadStory() {
-	const res = await fetch("/data/story.json", { cache: "no-store" });
-	if (!res.ok) throw new Error("story.json load failed");
-	STORY = await res.json();
+	console.log('yaml 파일 로드 내부 파일로 변경')
+  const res = await fetch("/data/story.yaml", { cache: "no-store" });
+  if (!res.ok) throw new Error("story.yaml load failed");
+
+  const yamlText = await res.text();
+  STORY = jsyaml.load(yamlText);
+
+	console.log("STORY start:", STORY?.start);
+	console.log("ep1:", STORY?.nodes?.ep1);
 }
+
 
 // 상태바
 function updateStatusBar() {
