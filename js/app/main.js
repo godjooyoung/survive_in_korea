@@ -28,6 +28,7 @@ sfxPlayer.loop = false;
 // 돔 요소
 const gameTitle = document.querySelector('.game_title');
 const imageWrap = document.querySelector('.game_image_wrap');
+const imageOverlayWrap = document.querySelector('.game_image_overlay_wrap');
 const storyWrap = document.querySelector('.game_story_wrap');
 const storyArea = document.querySelector('.story_area');
 const buttonWrap = document.querySelector('.button_wrap');
@@ -78,6 +79,7 @@ function updateSceneImage(pMsgObj) {
 	// 연출 처리를 위한 이미지 패스 뿐 아니라, 연출 정보도 매개변수로 받음
 	let imgPath   = pMsgObj.img_src;
 	let imgEffect = pMsgObj.scn_fx;
+	let imgOverlayPath = pMsgObj.over_src;
 
 	if (imgPath) {
 		imageWrap.style.backgroundImage = `url(${imgPath})`;
@@ -88,6 +90,13 @@ function updateSceneImage(pMsgObj) {
 	} else {
 		imageWrap.style.backgroundImage = 'none';
 		imageWrap.style.backgroundColor = '#0A0D13'; // 기본 단색
+	}
+
+	if(imgOverlayPath) {
+		imageOverlayWrap.style.backgroundImage = `url(${imgOverlayPath})`;
+		imageOverlayWrap.style.backgroundColor = 'transparent';
+	}else{
+		imageOverlayWrap.style.backgroundImage = 'none';
 	}
 }
 
@@ -194,8 +203,8 @@ function renderMsg(pNodeObj, pMsgIdx) {
 	// 돔 초기화
 	storyArea.innerHTML = '';
 	buttonWrap.innerHTML = ''; 
-	
-	// 돔 초기화 - 연출 제거
+
+	// 돔 초기화 - 이미지 연출 제거
 	imageWrap.classList.remove("shake", "shake__heavy");
 
 	// 이미지 처리

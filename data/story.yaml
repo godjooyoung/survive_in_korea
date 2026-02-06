@@ -154,15 +154,13 @@ node_dict:
         sfx_src: /assets/audios/sfx/type_l.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          적응의 동물이라서일까...
-          우리는.. 
-          오래 지나지 않아
-          이상한 세상에 적응했다..
+          해답은 모르지만
+          적응은 빨랐다.
+        dly_ms: 500
         img_src: /assets/images/world_003.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          미쳐버린 한국에서 살아남을 수 있을까?...
-
+          미쳐버린 한국에서 살아남을 수 있을까?
   ep2:
     node_id: ep2
     node_tp: lines
@@ -211,7 +209,7 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          선택지가 이거 뿐일까..
+          선택지가..
           뭐 먹지..?
         img_src: /assets/images/food_001.webp
     choices:
@@ -225,7 +223,7 @@ node_dict:
         next_ids: [ep3_2]
       - c_node_id: 3
         msg_tx: |-
-          물
+          물?
         next_ids: [ep3_3]
       - c_node_id: 4
         msg_tx: |-
@@ -233,7 +231,7 @@ node_dict:
         next_ids: [ep3_4]
       - c_node_id: 5
         msg_tx: |-
-          굶는다.
+          굶자.
         next_ids: [ep3_5]
 
   ep3_1:
@@ -246,12 +244,13 @@ node_dict:
         msg_tx: |-
           이거 먹어도 되나..
           
-          말차맛 떡볶이..?
-          매생이맛 떡볶이..?
-
+          초록색 떡복이..?
           뭐야..도대체..
           
-          떡볶이 인건 맞으니까
+          일단,
+          떡볶이인건
+          맞는것 같다.
+          
           먹어보자!
         img_src: /assets/images/food_001_1.webp
       - msg_tp: effect_msg
@@ -264,27 +263,27 @@ node_dict:
         msg_tx: |-
           뭐지..?
           생각보다 먹을만한데..?
-
           배도 채웠으니 나가볼까..
+          
+          세상은 달라져도
+          하루는 비슷했다.
       - msg_tp: normal_msg
         sfx_src: /assets/audios/sfx/ding.mp3
         msg_tx: |-
           ...
           이놈의 재난 경보는
           쉴틈없이 울리네
-      - msg_tp: normal_msg
+      - msg_tp: effect_msg
         sfx_src: /assets/audios/sfx/ding.mp3
         msg_tx: |-
-          ...
-          XXX동 주민들은 신속한 대피를
-          ...
+          XXX동 주민들은 신속한 대피를...
       - msg_tp: normal_msg
         sfx_src: /assets/audios/sfx/ding.mp3
         msg_tx: |-
           ...
           ......
 
-          XXX동이면 여긴데?
+          ...XXX동이면 여긴데?
         img_src: /assets/images/street_001.webp
       - msg_tp: normal_msg
         #TODO 사람들 패닉 효과음 넣기
@@ -292,6 +291,8 @@ node_dict:
         img_src: /assets/images/street_002.webp
         msg_tx: |-
           ......!!
+        dly_ms : 300
+        scn_fx : shake
       - msg_tp: effect_msg
         #TODO 라디오 치지직 효과음 넣기
         sfx_src: /assets/audios/sfx/jijijig.mp3
@@ -299,6 +300,8 @@ node_dict:
         msg_tx: |-
           게이트발 운석이 ...
           ... 주민들은 빠르게 대피를
+        dly_ms : 700
+        scn_fx : shake__heavy
       - msg_tp: normal_msg
         msg_tx: |-
           왠 불덩이가..?
@@ -308,28 +311,72 @@ node_dict:
           이렇게 세상 하직하는구나-
       - msg_tp: effect_msg
         msg_tx: |-
-          -디요오오옹-
-        img_src: /assets/images/byebyestone.webp
+          퍽!
+      - msg_tp: effect_msg
+        msg_tx: |-
+          디요오오옹
+      - msg_tp: normal_msg
+        msg_tx: |-
+          피할 틈도 없었다.
+          생각보다 아프지 않았다..
+          죽음은 이런걸까?
       - msg_tp: system_msg
         sfx_src: /assets/audios/sfx/sys_bell.mp3
         msg_tx: |-
           방사능 떡볶이의 효과로
           [버프:말랑쫀득 피부]를 얻었습니다.
 
-          일정 시간 동안
-          [버프:말랑쫀득 피부]의 효과에 의해
-          충격 데미지가 사라집니다.
+          일정 시간 동안 받는
+          충격 데미지를 무효화하고,
+          충격을 반사합니다.
+
+          운석의 충격은
+          말랑쫀득 피부에 의해 상쇄되었습니다.
       - msg_tp: normal_msg
-        img_src: /assets/images/flyhuman.webp
         msg_tx: |-
           ?!!
-      - msg_tp: normal_msg
-        img_src: /assets/images/market.webp
+      - msg_tp: effect_msg
         msg_tx: |-
-          그렇게 난
-          날라온 운석에 맡고
-          팅겨져 이곳에 도착했다.
-        
+          저기요!!
+          저기요..!!
+      - msg_tp: effect_msg
+        msg_tx: |-
+          괜찮으세요?
+        over_src: /assets/images/human_surp_001.webp
+        img_src: /assets/images/street_004.webp
+      - msg_tp: normal_msg
+        msg_tx: |-
+          어.. 저 어떻게 된거죠?
+      - msg_tp: normal_msg
+        msg_tx: |-
+          남자는 몇번이나
+          정말 괜찮은건지 확인하더니
+
+          어떻게 된 일인지 설명해주었다.
+      - msg_tp: normal_msg
+        img_src: /assets/images/street_003.webp
+        over_src: /assets/images/human_surp_001.webp
+        scn_fx : shake
+        msg_tx: |-
+          남자의 말로는
+          운석이 날라오다가
+
+          나에게 맞더니
+          튕겨나갔다고 한다.
+      - msg_tp: effect_msg
+        msg_tx: |-
+          정말 감사합니다!
+          덕분에 살았어요!!
+        over_src: /assets/images/human_thank_001.webp
+        img_src: /assets/images/street_004.webp
+      - msg_tp: normal_msg
+        msg_tx: |-
+          남자는 연신 고개를 숙이다가
+          자기 갈 길로 뛰어갔다.
+      - msg_tp: normal_msg
+        msg_tx: |-
+          정신이 하나도 없네...
+          나도 일단 가던대로 가볼까...
     next_ids: [ep4]
 
   ep3_2:
@@ -340,38 +387,86 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "솔직히..<br/>이건 맛있어보인다.<br/>...먹어볼까"
+          솔직히,
+          맛있어보인다...
+          먹어볼까
         img_src: /assets/images/food_001_3.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "...<br/>뭐지, 이 소리는?<br/>아니,<br/>왠지 편안해지는 기분이다"
+          ...
+          뭐지,
+          이 소리는?
+          
+          ...왠지 편안해지는 기분이다.
         sfx_src: /assets/audios/sfx/butta.mp3
-      - msg_tp: system_msg
+      - msg_tp: normal_msg
         msg_tx: |-
-          "버프:원효대사의 축복<br/>원효대사의 축복을 받습니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
-        img_src: /assets/images/wonhyo.webp
+          ...
+          배도 채웠으니 나가볼까..
+          세상은 달라져도
+          하루는 비슷했다.
       - msg_tp: effect_msg
         msg_tx: |-
-          "구오오오오!!"
+          구오오오오!!
         img_src: /assets/images/monster.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "아, 몬스터 때문에 난리라더니.."
-      - msg_tp: system_msg
-        msg_tx: |-
-          "버프:원효대사의축복<br/>모든 것은 오로지 마음먹기에 달렸다.<br/>어떻게 세상을 인식하나요?<br/>몬스터가 당신을 인식하지 못합니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
+          어디선가
+          괴상한 소리가 들려왔다.
+
+          뭐지?...
+
+          !!!
       - msg_tp: normal_msg
         msg_tx: |-
-          "???<br/>원효대사요..??<br/>몬스터가 이대로 지나친다고??<br/>지나치네...?"
+          고개를 돌리니
+          웬 몬스터 같은게
+          달려들고있었다.
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
+          게이트발
+          몬스터 때문에
+          난리라더니
+          ...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
+          미친 세상.. 
+          미친 몬스터 때문에
+          하직하는구나
+          ...
+      - msg_tp: system_msg
+        msg_tx: |-
+          해골에 담긴 음식을 먹었습니다.
+          [버프:원효대사의 축복]를 얻었습니다.
+          모든 것은 오로지 마음먹기에 달렸다.
+          
+          인식의 전환이 발생합니다.
+          몬스터의 인식 대상에서 제외됩니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+        img_src: /assets/images/wonhyo.webp
+
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ???
+          원효대사요..??
+          몬스터가 이대로
+          ...
+          ...
+          지나치네...?
         img_src: /assets/images/bytmonster.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "일체유심조라...<br/>그렇게 한참을 몬스터가<br/>있던 자리를 쳐다봤다.."
+          ...
+          일체유심조라...
+          그렇게 한참을 몬스터가
+          있던 자리를 쳐다봤다...
+          ...
       - msg_tp: normal_msg
         msg_tx: |-
-          "아!!<br/>이쪽 방향으로 쭉 가면 시장이 있었던것 같은데.."
+          아!!
+          여기 시장이 있었던 것 같은데?!
     next_ids: [ep4]
 
   ep3_3:
