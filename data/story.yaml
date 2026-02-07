@@ -139,7 +139,9 @@ node_dict:
           자기가 읽던 판타지소설이
           드디어
           현실이 되었다고 하고..
-          
+        sfx_src: /assets/audios/sfx/type_l.mp3
+      - msg_tp: normal_msg
+        msg_tx: |-
           어떤 사람은...
           
           특이점이 온 AI가
@@ -234,6 +236,7 @@ node_dict:
           굶자.
         next_ids: [ep3_5]
 
+  #초록 떡볶이
   ep3_1:
     node_id: ep3_1
     node_tp: lines
@@ -304,7 +307,6 @@ node_dict:
         scn_fx : shake__heavy
       - msg_tp: normal_msg
         msg_tx: |-
-          왠 불덩이가..?
           아니, 지금 안내해주는게 의미가 있어?
           
           하...
@@ -329,7 +331,9 @@ node_dict:
           일정 시간 동안 받는
           충격 데미지를 무효화하고,
           충격을 반사합니다.
-
+      - msg_tp: system_msg
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+        msg_tx: |-
           운석의 충격은
           말랑쫀득 피부에 의해 상쇄되었습니다.
       - msg_tp: normal_msg
@@ -361,7 +365,7 @@ node_dict:
           남자의 말로는
           운석이 날라오다가
 
-          나에게 맞더니
+          나에게 부딪히더니 그대로 
           튕겨나갔다고 한다.
       - msg_tp: effect_msg
         msg_tx: |-
@@ -379,6 +383,7 @@ node_dict:
           나도 일단 가던대로 가볼까...
     next_ids: [ep4]
 
+  #해골 팥빙수
   ep3_2:
     node_id: ep3_2
     node_tp: lines
@@ -402,71 +407,79 @@ node_dict:
       - msg_tp: normal_msg
         msg_tx: |-
           ...
-          배도 채웠으니 나가볼까..
+          밥도 먹었겠다 이제 슬슬 나가볼까..
+          ...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
           세상은 달라져도
           하루는 비슷했다.
+          ...
+        img_src: /assets/images/town_001.webp
+      - msg_tp: effect_msg
+        img_src: /assets/images/town_001.webp
+        msg_tx: |-
+          그으르르...
+          으르르...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          왠..짐승소리지?
       - msg_tp: effect_msg
         msg_tx: |-
-          구오오오오!!
-        img_src: /assets/images/monster.webp
+          ..그르르
+          으르르...
+        img_src: /assets/images/monster_001.webp
+        dly_ms : 300
+        scn_fx : shake
       - msg_tp: normal_msg
         msg_tx: |-
-          어디선가
-          괴상한 소리가 들려왔다.
+          ...
+          도망쳐야해!!
+          
+          라고 생각하는
+          머리와 달리
+          몸은 움직이지 않는다..
+          ...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          짐승인지 괴물인지와
+          눈이 마주친것 같다.
 
-          뭐지?...
-
-          !!!
-      - msg_tp: normal_msg
-        msg_tx: |-
-          고개를 돌리니
-          웬 몬스터 같은게
-          달려들고있었다.
-      - msg_tp: normal_msg
-        msg_tx: |-
-          ...
-          게이트발
-          몬스터 때문에
-          난리라더니
-          ...
-      - msg_tp: normal_msg
-        msg_tx: |-
-          ...
-          미친 세상.. 
-          미친 몬스터 때문에
-          하직하는구나
-          ...
+          죽는구나...
       - msg_tp: system_msg
         msg_tx: |-
           해골에 담긴 음식을 먹었습니다.
           [버프:원효대사의 축복]를 얻었습니다.
           모든 것은 오로지 마음먹기에 달렸다.
-          
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+        img_src: /assets/images/monster_001.webp
+        over_src: /assets/images/wonhyo.webp
+      - msg_tp: system_msg
+        msg_tx: |-
           인식의 전환이 발생합니다.
           몬스터의 인식 대상에서 제외됩니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
-        img_src: /assets/images/wonhyo.webp
-
+        img_src: /assets/images/monster_002.webp
       - msg_tp: normal_msg
         msg_tx: |-
           ???
-          원효대사요..??
-          몬스터가 이대로
-          ...
-          ...
-          지나치네...?
-        img_src: /assets/images/bytmonster.webp
+          원효대사..?
+          그 해골물? 원효대사?
       - msg_tp: normal_msg
         msg_tx: |-
-          ...
-          일체유심조라...
-          그렇게 한참을 몬스터가
-          있던 자리를 쳐다봤다...
-          ...
+          몬스터는 정말 지나쳐갔다...
+        img_src: /assets/images/monster_003.webp
       - msg_tp: normal_msg
         msg_tx: |-
+          그렇게 한참을
+          몬스터가 있던 골목을 쳐다봤다...
+
           아!!
-          여기 시장이 있었던 것 같은데?!
+        img_src: /assets/images/town_001.webp
+      - msg_tp: normal_msg
+        msg_tx: |-
+          시장.. 
+          시장을 가고있었다.
     next_ids: [ep4]
 
   ep3_3:
@@ -477,24 +490,41 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "...<br/>뭔가 신성해 보인다..<br/>왜 하필 이런 컵인데..<br/>목에 구멍 나진 않겠지?"
+          ...뭐지?
+          뭔가 신성해 보인다...
+
+          왠지 목에 구멍이
+          날 것 같기도 하고..
+
+          왜 하필 이런 컵인데..
         img_src: /assets/images/food_001_2.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "으으..!!<br/>목이 타는것 같다."
+          으으..!!
+          목이 타는것 같다.
+        scn_fx : shake
+        img_src: /assets/images/food_001_2.webp
       - msg_tp: system_msg
         msg_tx: |-
-          "상태:시력 상실<br/>잠시 동안 시력을 상실합니다."
+          [상태:시력상실]
+          잠시 동안 시력을 상실합니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "?? 미친 술이었어?<br/>하..모르겠다..<br/>..뭐 안보고 사는것도 좋지.."
+          ?? 술이었어?
+          아니, 뭔 소주를 마셨다고
+          시력을 상실하냐고!!!
+
+          하..모르겠다....
+          뭐 안보고 사는것도 좋지..
       - msg_tp: system_msg
         msg_tx: |-
-          "스트레스 지수가 내려갑니다.<br/>회피도 좋은 힐링입니다."
+          스트레스 지수가 내려갑니다.
+          회피도 좋은 힐링입니다.
       - msg_tp: normal_msg
         msg_tx: |-
-          "어..이제 보인다!<br/>일단 밖이나 나가볼까.."
+          어..이제 보인다!
+          일단 밖이나 나가볼까..
     next_ids: [ep4]
 
   ep3_4:
@@ -505,12 +535,22 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "..두쫀쿠...두바이쫀득쿠카..?<br/>그래..망하기 전까지 엄청 인기였지..<br/>이렇게 생긴게 맞나?"
+          ..두쫀쿠...
+          두바이쫀득쿠키..?
+          
+          그래...분명히
+          세상이 망하기 전에
+          엄청 인기였다...
+          
+          이렇게 생긴게 맞나?
         img_src: /assets/images/food_001_4.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "오! 엄청 달구나?<br/>미쳐버린 세상에서 이런 디저트라니..사치일까.."
-    next_ids: [ep3_4_1, ep3_4_1, ep3_4_1]
+          오! 엄청 달구나?
+          미쳐버린 세상에서
+          이런 디저트라니...
+          사치일까...
+    next_ids: [ep3_4_1, ep3_4_2]
 
   ep3_5:
     node_id: ep3_5
@@ -520,50 +560,84 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "...<br/>선택지..극악이노..<br/>차라리 굶자"
+          ...선택지 극악이네...
+          그래, 차라리 굶자.
       - msg_tp: system_msg
         msg_tx: |-
-          "상태:허기짐<br/>음식을 섭취하세요.<br/>공복이 계속되면 위험합니다."
+          [상태:허기짐]
+          음식을 섭취하세요.
+          공복이 계속되면 위험합니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "하..배고픈데..<br/>아냐, 저딴걸 먹을 순 없어."
+          참나, 내가 저딴걸 먹나 봐라.
+
+          하...
+          배고픈데...
+
+          나는 제대로된 음식을
+          살려고 시장으로 향했다.
       - msg_tp: normal_msg
         msg_tx: |-
-          "..."
+          어..?
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
+          ......
       - msg_tp: system_msg
         msg_tx: |-
-          "상태:쓰러짐<br/>정신을 잃습니다."
+          [상태:쓰러짐]
+          계속 된 허기짐 상태로
+          결국 정신을 잃습니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "하..그래..이대로 죽는것도.."
+          하....
+          굶어서 죽는게
+          내 인생 엔딩인가..
+          
+          이대로 죽는것도...
       - msg_tp: normal_msg
         msg_tx: |-
-          "..."
+          ...
       - msg_tp: normal_msg
         msg_tx: |-
-          "......"
+          ......
       - msg_tp: effect_msg
         msg_tx: |-
-          "웅성웅성"
+          웅성웅성-
+      - msg_tp: normal_msg
+        msg_tx: |-
+          주변이 소란스럽다.
+          
+          ...뭐지?
+          안죽었나?
+          천국이 있는건가?
       - msg_tp: system_msg
         msg_tx: |-
-          "버프:다이어터의 존경<br/>다이어터의 존경을 받습니다."
+          허기짐 상태를 유지하다
+          생명의 위기까지 갔습니다.
+          [버프:다이어터의 존경]
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: system_msg
+        msg_tx: |-
+          다이어터들은 죽음 직전까지
+          굶는 당신의 의지에 찬사를 보냅니다.
+          그들에게 '굶음'은 신성한 행위입니다.
+          
+          [상태:허기짐]이 사라집니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "안죽는다고?"
-      - msg_tp: system_msg
-        msg_tx: |-
-          "다이어터들은 굶는 당신을 보고<br/>눈물을 흘립니다.<br/>그들에게 '굶음'은 신성한 행위입니다.<br/>그들이 쓰러진 당신을 병원으로 이송해 살렸습니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
-      - msg_tp: effect_msg
-        msg_tx: |-
-          "??씨, 퇴원하셔야합니다."
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "하..일단 나가볼까.."
+          …살아있네.
+
+          아까는 배고파서
+          죽는줄 알았는데
+
+          뭐지.
+          
+          하… 됐다.
+          시장이나 가자.
     next_ids: [ep4]
 
   ep3_4_1:
@@ -574,35 +648,108 @@ node_dict:
     msg_list:
       - msg_tp: system_msg
         msg_tx: |-
-          "상태:슈가하이<br/>엄청난 단맛에 기분이 좋아집니다.<br/>세상이 온통 달콤하게 보입니다."
+          [상태:슈가하이]
+          엄청난 단맛에 기분이 좋아집니다.
+          세상이 온통 달콤하게 보입니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "역시..두쫀쿠 선택하길 잘했어. 제일 괜찮아 보였다니까!"
+          역시..
+          달달구리를 좀 먹어야해!!
+
+          기분이 잔뜩 좋아진 채 집을 나섰다.
+      - msg_tp: normal_msg
+        msg_tx: |-
+          들뜬 기분으로 걸은지
+          얼마나 됬을까...
+          
+          주변에 사람이 없다.
+          뭐지?
+      - msg_tp: normal_msg
+        sfx_src: /assets/audios/sfx/ding.mp3
+        msg_tx: |-
+          ...
+          이놈의 재난 경보는
+          쉴틈없이 울리네
       - msg_tp: effect_msg
+        sfx_src: /assets/audios/sfx/ding.mp3
         msg_tx: |-
-          "슈우우욱!"
+          게이트발 운석이 발생했습니다!
+          XXX동 주민은 외출을 삼가...
       - msg_tp: normal_msg
         msg_tx: |-
-          "뭐지? 이 소리는?!<br/>나름 살만한데 라고 생각하기 무섭게 운석이라니..<br/>안돼! 못피하겠어!!"
+          ...
+          ......
+
+          ...XXX동이면 여긴데?
       - msg_tp: normal_msg
         msg_tx: |-
-          "으아악!<br/>거대한 돌덩이 앞에 인간은 얼마나 작은가<br/>의미가 없는걸 알지만 무의식적으로 손을 휘젓는다.<br/>마치 저 운석을 막기라도 하겠단 듯이..<br/>나도 참 바보네.."
-      - msg_tp: effect_msg
-        msg_tx: |-
-          "와장창창-"
+          고개를 들자
+          거대한 바위가 나를 향해 떨어지고 있었다.
       - msg_tp: normal_msg
         msg_tx: |-
-          "..바위가 이런 소리를 냈었나? 꼭 감았던 눈을 떠봤다.<br/>눈앞에 반짝이는 조각이 잔뜩 굴러다닌다..<br/>뭐지..?분명 바위었는데.."
+          의미가 없다고 생각하면서도
+          무의식적으로 손을 휘젓는다
+          
+          마치 저 운석을 막기라도 하겠단 듯이..
+        img_src: /assets/images/stone_001.webp
+        dly_ms : 300
+        scn_fx : shake
+      - msg_tp: normal_msg
+        msg_tx: |-
+          소용없어...!
+          이대로 죽는구나...
+        img_src: /assets/images/stone_002.webp
+        dly_ms : 300
+        scn_fx : shake
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
+          ..... 어?! 
+          운석이 저런 색인가..?
+        img_src: /assets/images/sugar_stone.webp
+        dly_ms : 300
       - msg_tp: system_msg
         msg_tx: |-
-          "상태:슈가하이<br/>...<br/>세상이 온통 달콤하게 보입니다.<br/>...<br/>일시적으로 분자 구조가 변경됩니다."
+          [상태:슈가하이]
+          엄청난 단맛에 기분이 좋아집니다.
+          세상이 온통 달콤하게 보입니다.
+          ...
+          당신이 바라보는
+          사물의 분자 구조가
+          일시적으로 변경됩니다.
+      - msg_tp: effect_msg
+        msg_tx: |-
+          쨍그랑!!!
       - msg_tp: normal_msg
         msg_tx: |-
-          "...<br/>......<br/>.........<br/>설탕이네...<br/>가까이서 바라본 조각들은 설탕조각이었다."
+          왠 깨지는 소리지..?
+          그보다 나 괜찮은건가..?
+
+          조심스럽게 눈을 떳다.
       - msg_tp: normal_msg
         msg_tx: |-
-          "이게 뭘까 싶지만, <br/>일단...병원으로 가야겠지?<br/>일단 나가자."
+          눈앞에 반짝이는
+          조각이 잔뜩 굴러다닌다..
+        dly_ms : 500
+        img_src: /assets/images/sugar_broken.webp
+      - msg_tp: normal_msg
+        msg_tx: |-
+          ...
+          .......
+          설탕이네...
+          가까이서 바라본 조각들은 설탕조각이었다.
+      - msg_tp: system_msg
+        msg_tx: |-
+          [상태:슈가하이]가 사라집니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: normal_msg
+        msg_tx: |-
+          들뜬 기분이 좀 가라앉고
+          정신이 좀 든다.
+
+          주변을 보니 왠 시장이 보인다.
+          아직도 시장을 하는구나..
     next_ids: [ep4]
 
   ep3_4_2:
@@ -613,27 +760,130 @@ node_dict:
     msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "..두쫀쿠...두바이쫀득쿠카..?<br/>그래..망하기 전까지 엄청 인기였지..<br/>이렇게 생긴게 맞나?"
-        img_src: /assets/images/food_001_4.webp
+          역시..
+          달달구리를 좀 먹어야해!!
+
+          기분이 좋아졌다.
       - msg_tp: normal_msg
         msg_tx: |-
-          "오! 엄청 달구나?<br/>미쳐버린 세상에서 이런 디저트라니..사치일까.."
+          어..? 어라?
+          
+          눈앞이 갑자기 어두워진다.
+      - msg_tp: effect_msg
+        msg_tx: |-
+          ...
+          ...어...
+          ...먹...어...
+          ...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          이상한 소리에
+          눈을 떴다.
+          
+          뭐지? 쓰러졌던 건가?
+          
+          요즘 피곤했나..?
+          어리둥절 하기도 잠시
+      - msg_tp: effect_msg
+        msg_tx: |-
+          ...먹어...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          선명하게 들려오는 소리에
+          놀라 고개를 들었다.
+      - msg_tp: effect_msg
+        msg_tx: |-
+          ...왜..
+          왜!!!!
+          
+          다들 두쫀쿠만 먹는거야..?
+          ...
+          ......
+
+          나는?
+        dly_ms : 700
+        scn_fx : shake
+        img_src: /assets/images/tangman_001.webp
+      - msg_tp: effect_msg
+        msg_tx: |-
+          훼엑-!
+        dly_ms : 500
+        img_src: /assets/images/tangman_002.webp
+      - msg_tp: effect_msg
+        msg_tx: |-
+          ...나를!!!먹어먹어먹어먹어먹어먹어먹어먹으라고!!!...
+        img_src: /assets/images/tangman_003.webp
+      - msg_tp: system_msg
+        msg_tx: |-
+          두쫀쿠에 밀려 잊혀진 디저트가 분노합니다.
+          [너프:잊혀진디저트의저주]가 적용됩니다.
+          혈당 수치가 오릅니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: system_msg
+        msg_tx: |-
+          [상태:고혈당]
+          혈당을 낮추세요.
+          위험합니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: system_msg
+        msg_tx: |-
+          [상태:고혈당]
+          [상태:고혈당]
+          [상태:고혈당]
+          [상태:고혈당]
+          [상태:고혈당]
+          [상태:고혈당]
+          [상태:고혈당]
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: normal_msg
+        msg_tx: |-
+          아니, 이게 무슨…
+          어이없음도 잠시
+          ...
+          어..?
+          어라...?
+          쓰러진다.
+      - msg_tp: system_msg
+        msg_tx: |-
+          생체 수치 분석 합니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: normal_msg
+        msg_tx: |-
+          죽은건가.. 나..
+      - msg_tp: system_msg
+        msg_tx: |-
+          혈당 수치가 시스템 범위를 벗어납니다.
+          오류로 간주합니다.
+          강제 안정화가 적용됩니다.
+        sfx_src: /assets/audios/sfx/sys_bell.mp3
+      - msg_tp: normal_msg
+        msg_tx: |-
+          눈을 떴다.
+          머리가 멍하다.
+
+          조용하다...
+          꿈꾼건가..?
+
+          집 안에 혼자 있는 게
+          갑자기 좀 무섭다.
+
+          일단 나가자.
     next_ids: [ep4]
 
-  ep3_4_3:
-    node_id: ep3_4_3
-    node_tp: lines
-    bgm_src: /assets/audios/bgm/theme_008.mp3
-    txt_cnt: 176
-    msg_list:
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "..두쫀쿠...두바이쫀득쿠카..?<br/>그래..망하기 전까지 엄청 인기였지..<br/>이렇게 생긴게 맞나?"
-        img_src: /assets/images/food_001_4.webp
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "오! 엄청 달구나?<br/>미쳐버린 세상에서 이런 디저트라니..사치일까.."
-    next_ids: [ep4]
+  # ep3_4_3:
+  #   node_id: ep3_4_3
+  #   node_tp: lines
+  #   bgm_src: /assets/audios/bgm/theme_008.mp3
+  #   txt_cnt: 176
+  #   msg_list:
+  #     - msg_tp: normal_msg
+  #       msg_tx: |-
+  #         "..두쫀쿠...두바이쫀득쿠카..?<br/>그래..망하기 전까지 엄청 인기였지..<br/>이렇게 생긴게 맞나?"
+  #       img_src: /assets/images/food_001_4.webp
+  #     - msg_tp: normal_msg
+  #       msg_tx: |-
+  #         "오! 엄청 달구나?<br/>미쳐버린 세상에서 이런 디저트라니..사치일까.."
+  #   next_ids: [ep4]
 
   ep4:
     node_id: ep4
@@ -643,87 +893,125 @@ node_dict:
     msg_list:
       - msg_tp: effect_msg
         msg_tx: |-
-          "웅성웅성"
+          웅성웅성
       - msg_tp: normal_msg
         msg_tx: |-
-          "아직도 시장을 하는구나...<br/>사람 사는 냄새가 나는 것 같다.<br/>왠지모르게 힐링이네.."
+          이런 이상한 세상에서도 시장은 한다...
+          왠지 사람 사는 냄새가 나는 것 같다.
+          
+          힐링이네..
         img_src: /assets/images/market.webp
+      - msg_tp: effect_msg
+        msg_tx: |-
+          ...
+          "요 앞에 사거리 있죠? 거기서 운석이~"
+          "어머나! 누군지 몰라도 큰일했네!"
+          ...
       - msg_tp: normal_msg
         msg_tx: |-
-          "그래, 열심히 살아야지..!!<br/>반찬거리라도 사러 가볼까?"
+          사람들의 일상 수다를
+          배경음 삼아 시장을
+          구경하기 시작했다.
+        img_src: /assets/images/market.webp
       - msg_tp: system_msg
         msg_tx: |-
-          "[알림]게이트 발생"
+          [알림:게이트 발생]
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "게이트에 대한 뉴스가 머리속에 떠올랐다."
+          ...
+          게이트에 대한
+          뉴스가 머리속에 떠올랐다.
+          ...
       - msg_tp: effect_msg
         msg_tx: |-
-          "...이상 현상을.. 게이트라고..부르기로..<br/>..주변 환경에 영향을..<br/>"
+          ...이상 현상을.. 게이트라고..부르기로..
+          ...게이트는 주변 환경에 영향을..받습니다.."
         sfx_src: /assets/audios/sfx/jijijig.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "샤갈!!<br/>아주 뒤져라고 굿을 하는 미친 세상..!!!<br/>좀 열심히 살라고 맘먹었는데"
+          게이트 상황에 어떤 행동을 해야하는지
+          수없이 안내를 들었지만
+          막상 다치니..
+          
+          머릿속이 하얗게 된다..
+          ...
+          ......
+
+          살고싶어...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          이럴때 어떻게 하라그랬지..?
+          
+          ....도저히 생각이
+          나지 않는다...
+      - msg_tp: normal_msg
+        msg_tx: |-
+          하..........
+
+          순간 울컥하면서
+          욕지거리가 나왔다.
+
+          아주 죽으라고 굿을 하는
+          것만 같다.
+          ......
       - msg_tp: system_msg
         msg_tx: |-
-          "[알림]환경을 게이트에 반영합니다."
+          게이트는 주변 환경을 반영합니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: normal_msg
         msg_tx: |-
-          "반영? 반영을 하던말던...<br/>아니 이럴때 어떻게 하라그랬지..?"
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "게이트 상황에 어떤 행동을 해야하는지<br/>수많은 안내를 들었지만<br/>막상 다치니..<br/>머릿속이 하얗게 된다..<br/>...<br/>"
+          살고싶다는..마음과 달리 몸은 굳었다.
+          
+          도망가야할까?
+          뛴다고 될까?
+          ...
       - msg_tp: system_msg
         msg_tx: |-
-          "[알림]게이트 몬스터 출몰"
+          게이트 몬스터가 출몰합니다.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
       - msg_tp: system_msg
         msg_tx: |-
-          "미친 맹수입니다.<br/>광견병을 조심하세요."
+          미친 맹수입니다.
+          광견병을 조심하세요.
         sfx_src: /assets/audios/sfx/sys_bell.mp3
+    next_ids: [ep5]
+
+  ep5:
+    node_id: ep5
+    node_tp: choice
+    bgm_src: /assets/audios/bgm/theme_008.mp3
+    txt_cnt: 44
+    msg_list:
       - msg_tp: normal_msg
         msg_tx: |-
-          "...<br/>환경 반영이라며..<br/>왜 갑자기 곰이랑 호랑인데!!"
+          ...
+          환경 반영이라며..
+          왜 갑자기 곰이랑 호랑인데!!
         img_src: /assets/images/market.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "하..배고픈데..<br/>아냐, 저딴걸 먹을 순 없어."
+          시장에서 갑자기 저런 맹수들이 왜 나오냐고!
+        img_src: /assets/images/market.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "..."
-      - msg_tp: system_msg
-        msg_tx: |-
-          "[상태: 쓰러짐]<br/>정신을 잃습니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
+          억울한 마음은 마음이고
+          미친 짐승들이 달려든다...
+        img_src: /assets/images/market.webp
       - msg_tp: normal_msg
         msg_tx: |-
-          "하..그래..이대로 죽는것도.."
-      - msg_tp: normal_msg
+          누구한테..
+          죽는게 덜아프지...
+
+
+          이런 생각을 하는 내가 우습다.
+        img_src: /assets/images/market.webp
+    choices:
+      - c_node_id: 1
         msg_tx: |-
-          "..."
-      - msg_tp: normal_msg
+          곰
+        next_ids: [ep5_1]
+      - c_node_id: 2
         msg_tx: |-
-          "......"
-      - msg_tp: effect_msg
-        msg_tx: |-
-          "웅성웅성"
-      - msg_tp: system_msg
-        msg_tx: |-
-          "[버프: 다이어터의 존경]<br/>다이어터의 존경을 받습니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "안죽는다고?"
-      - msg_tp: system_msg
-        msg_tx: |-
-          "다이어터들은 굶는 당신을 보고<br/>눈물을 흘립니다.<br/>그들에게 '굶음'은 신성한 행위입니다.<br/>그들이 쓰러진 당신을 병원으로 이송해 살렸습니다."
-        sfx_src: /assets/audios/sfx/sys_bell.mp3
-      - msg_tp: effect_msg
-        msg_tx: |-
-          "??씨, 퇴원하셔야합니다."
-      - msg_tp: normal_msg
-        msg_tx: |-
-          "하..일단 나가볼까.."
-    next_ids: [ep4]
+          호랑이
+        next_ids: [ep5_2]
